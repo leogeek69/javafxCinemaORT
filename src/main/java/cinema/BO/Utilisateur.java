@@ -58,4 +58,9 @@ public class Utilisateur {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    //ajout méthode toString afin de corriger affichage liste gérants
+    public String toString() {
+        return nom + " " + prenom;
+    }
 }

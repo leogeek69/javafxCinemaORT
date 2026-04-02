@@ -88,11 +88,11 @@
         
         <TableView fx:id="tvFranchises" layoutY="50.0" prefHeight="292.0" prefWidth="873.0">
             <columns>
-                <TableColumn fx:id="tcNomFranchise" prefWidth="150.0" text="tcNomFranchise" />
-                <TableColumn fx:id="tcSiegeSocial" prefWidth="160.0" text="tcSiegeSocial" />
-                <TableColumn fx:id="tcGerant" prefWidth="210.0" text="tcGerant" />
-                <TableColumn fx:id="tcSupprimer" prefWidth="110.0" text="tcSupprimer" />
-                <TableColumn fx:id="tcModifier" prefWidth="110.0" text="tcModifier" />
+                <TableColumn fx:id="tcNomFranchise" prefWidth="150.0" text="Nom Franchise" />
+                <TableColumn fx:id="tcSiegeSocial" prefWidth="160.0" text="Siege Social" />
+                <TableColumn fx:id="tcGerant" prefWidth="210.0" text="Gerant" />
+                <TableColumn fx:id="tcSupprimer" prefWidth="110.0" text="Supprimer" />
+                <TableColumn fx:id="tcModifier" prefWidth="110.0" text="Modifier" />
             </columns>
         </TableView>
         
