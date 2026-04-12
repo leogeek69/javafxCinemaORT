@@ -31,7 +31,7 @@
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
 
-                  
+
                         <Label alignment="CENTER"
                                contentDisplay="CENTER"
                                prefHeight="67.0"
@@ -52,7 +52,7 @@
                             </image>
                         </ImageView>
 
-               
+
                     </children>
                 </HBox>
                 <Separator prefWidth="200.0" style="-fx-background-color: #024010;">
@@ -75,7 +75,7 @@
                                 <Insets left="80.0" top="10.0" />
                             </HBox.margin>
                         </Label>
-                        //à changer car login en dur
+                        <!--à changer car login en dur-->
                         <TextField fx:id="tfLogin" prefHeight="31.0" prefWidth="262.0" text="jean.dupont@email.com">
                             <opaqueInsets>
                                 <Insets top="15.0" />
@@ -96,7 +96,7 @@
                                 <Insets left="80.0" top="10.0" />
                             </HBox.margin>
                         </Label>
-                        //à changer car mdp en dur
+                        <!--à changer car mdp en dur-->
                         <PasswordField fx:id="tfMDP" prefHeight="25.3" prefWidth="262.0" text="jean">
                             <HBox.margin>
                                 <Insets bottom="10.0" left="5.0" top="5.0" />

@@ -9,6 +9,7 @@
 <?import javafx.scene.text.Text?>
 
 
+<?import javafx.scene.control.Label?>
 <StackPane prefHeight="157.0"
            prefWidth="560.0"
            xmlns="http://javafx.com/javafx/22"
@@ -24,6 +25,7 @@
 
       
         <!-- Message d'erreur -->
+        <Label fx:id="labelMessage" text="" />
         <Text fill="#0c7422" text="Erreur : identifiant ou mot de passe incorrect" textAlignment="CENTER" wrappingWidth="480.0">
             <font>
                 <Font name="Franklin Gothic Medium" size="22.0" />
