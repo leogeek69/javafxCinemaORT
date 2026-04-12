@@ -19,7 +19,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ConnexionController implements Initializable {
-
+    private int compteur =0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
@@ -41,8 +41,10 @@ public class ConnexionController implements Initializable {
         Utilisateur user = userDAO.authenticate(login, mdp);
 
         if (user != null) {
+            compteur = 0;
             showAccueil(user.getLogin());
         } else {
+            compteur = compteur + 1;
             showError();
         }
     }
@@ -93,7 +95,7 @@ public class ConnexionController implements Initializable {
             ErrorController errorController = fxmlLoader.getController();
 
             // Passer la variable au contrôleur de la pop-up
-            // errorController.setMajLabel(Integer.toString(compteur));
+            errorController.setMajLabel(Integer.toString(compteur));
 
             // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();

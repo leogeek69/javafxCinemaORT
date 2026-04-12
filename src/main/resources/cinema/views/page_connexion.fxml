@@ -31,7 +31,7 @@
                 <HBox prefHeight="100.0" prefWidth="200.0">
                     <children>
 
-                  
+
                         <Label alignment="CENTER"
                                contentDisplay="CENTER"
                                prefHeight="67.0"
@@ -52,7 +52,7 @@
                             </image>
                         </ImageView>
 
-               
+
                     </children>
                 </HBox>
                 <Separator prefWidth="200.0" style="-fx-background-color: #024010;">
