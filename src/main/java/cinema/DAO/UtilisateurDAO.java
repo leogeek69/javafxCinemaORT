@@ -8,17 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cinema.BO.Utilisateur;
+import org.mindrot.jbcrypt.BCrypt;
 
 public class UtilisateurDAO extends DAO<Utilisateur> {
-
     @Override
     public boolean create(Utilisateur obj) {
         boolean result = false;
         try {
+            String mdpHashe = BCrypt.hashpw(obj.getMdp(), BCrypt.gensalt());
+
             String sql = "INSERT INTO utilisateur(login, mdp) VALUES(?,?)";
             PreparedStatement ps = this.connect.prepareStatement(sql);
             ps.setString(1, obj.getLogin());
-            ps.setString(2, obj.getMdp());
+            ps.setString(2, mdpHashe);
             int rowsInserted = ps.executeUpdate();
             if (rowsInserted > 0) {
                 result = true;
@@ -112,20 +114,46 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
         return user;
     }
 
-    public Utilisateur authenticate(String login, String password) {
-        Utilisateur user = null;
+    public Utilisateur authenticate(String login, String mdp) {
         try {
-            String sql = "SELECT * FROM utilisateur WHERE login =? AND mdp=?";
+            String sql = "SELECT * FROM utilisateur WHERE login = ?";
             PreparedStatement ps = this.connect.prepareStatement(sql);
             ps.setString(1, login);
-            ps.setString(2, password);
-            ResultSet result = ps.executeQuery();
-            if (result.next()) {
-                user = hydrate(result);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String mdpEnBDD = rs.getString("mdp");
+                boolean mdpOk = false;
+
+                // ✅ Si le mdp en BDD commence par $2a$ c'est un hash BCrypt
+                if (mdpEnBDD.startsWith("$2a$")) {
+                    mdpOk = BCrypt.checkpw(mdp, mdpEnBDD);
+                } else {
+                    // ❌ Mdp en clair, on compare directement
+                    mdpOk = mdpEnBDD.equals(mdp);
+
+                    // ✅ Et on en profite pour le migrer vers BCrypt
+                    if (mdpOk) {
+                        String mdpHashe = BCrypt.hashpw(mdp, BCrypt.gensalt());
+                        String sqlUpdate = "UPDATE utilisateur SET mdp = ? WHERE login = ?";
+                        PreparedStatement psUpdate = this.connect.prepareStatement(sqlUpdate);
+                        psUpdate.setString(1, mdpHashe);
+                        psUpdate.setString(2, login);
+                        psUpdate.executeUpdate();
+                    }
+                }
+
+                if (mdpOk) {
+                    Utilisateur u = new Utilisateur();
+                    u.setIdUtilisateur(rs.getInt("id_Utilisateur"));
+                    u.setLogin(rs.getString("login"));
+                    u.setMdp(rs.getString("mdp"));
+                    return u;
+                }
             }
         } catch (SQLException e) {
-            return null;
+            e.printStackTrace();
         }
-        return user;
+        return null;
     }
 }
