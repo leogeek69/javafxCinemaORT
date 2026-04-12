@@ -70,9 +70,9 @@
                     </graphic>
                     <items>
                         <MenuItem fx:id="bListeSalle" mnemonicParsing="false"
-                            onAction="#bListeSalleClick" text="Liste cours" />
+                            onAction="#bListeSalleClick" text="Liste salles" />
                         <MenuItem fx:id="bAjouterSalle" mnemonicParsing="false"
-                            onAction="#bAjouterSalleClick" text="Ajouter un cours" />
+                            onAction="#bAjouterSalleClick" text="Ajouter un salles" />
                     </items>
                 </Menu>
                 <Menu fx:id="bAutres" mnemonicParsing="false" text="Autres">

@@ -58,10 +58,10 @@
                     </graphic>
                     <items>
                         <MenuItem fx:id="bListeSalle"
-                            text="Liste cours"
+                            text="Liste salles"
                             onAction="#bListeSalleClick" />
                         <MenuItem fx:id="bAjouterSalle"
-                            text="Ajouter un cours"
+                            text="Ajouter un salles"
                             onAction="#bAjouterSalleClick" />
                     </items>
                 </Menu>
