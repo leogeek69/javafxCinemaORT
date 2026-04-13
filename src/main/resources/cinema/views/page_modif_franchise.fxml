@@ -45,7 +45,7 @@
                             onAction="#bAjouterFranchiseClick" text="Ajouter une franchise" />
                     </items>
                 </Menu>
-                <Menu fx:id="gestionCinema" mnemonicParsing="false" text="Gestion section">
+                <Menu fx:id="gestionCinema" mnemonicParsing="false" text="Gestion cinema">
                     <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                             <image>
@@ -55,12 +55,12 @@
                     </graphic>
                     <items>
                         <MenuItem fx:id="bListeCinema" mnemonicParsing="false"
-                            onAction="#bListeCinemaClick" text="Liste des sections" />
+                            onAction="#bListeCinemaClick" text="Liste des cinemas" />
                         <MenuItem fx:id="bAjouterCinema" mnemonicParsing="false"
-                            onAction="#bAjouterCinemaClick" text="Ajouter une section" />
+                            onAction="#bAjouterCinemaClick" text="Ajouter une cinema" />
                     </items>
                 </Menu>
-                <Menu fx:id="gestionSalle" mnemonicParsing="false" text="Gestion salles">
+                <Menu fx:id="gestionSalle" mnemonicParsing="false" text="Gestion cinema">
                     <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                             <image>
@@ -70,9 +70,9 @@
                     </graphic>
                     <items>
                         <MenuItem fx:id="bListeSalle" mnemonicParsing="false"
-                            onAction="#bListeSalleClick" text="Liste salles" />
+                            onAction="#bListeSalleClick" text="Liste cinema" />
                         <MenuItem fx:id="bAjouterSalle" mnemonicParsing="false"
-                            onAction="#bAjouterSalleClick" text="Ajouter un salles" />
+                            onAction="#bAjouterSalleClick" text="Ajouter un cinema" />
                     </items>
                 </Menu>
                 <Menu fx:id="bAutres" mnemonicParsing="false" text="Autres">
