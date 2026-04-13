@@ -42,7 +42,10 @@ public class ConnexionController implements Initializable {
 
         if (user != null) {
             compteur = 0;
-            showAccueil(user.getLogin());
+            String nomComplet = user.getPrenom() + " " + user.getNom();
+
+            // On envoie ce nom complet à l'accueil
+            showAccueil(nomComplet);
         } else {
             compteur = compteur + 1;
             showError();
