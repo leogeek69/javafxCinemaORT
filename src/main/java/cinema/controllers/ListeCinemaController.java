@@ -41,7 +41,13 @@ public class ListeCinemaController extends MenuController implements Initializab
     public void initialize(URL location, ResourceBundle resources) {
 
         tcDenomination.setCellValueFactory(new PropertyValueFactory<>("denomination"));
-        tcFranchise.setCellValueFactory(new PropertyValueFactory<>("franchise"));
+        //retourne le nom de la franchise
+        tcFranchise.setCellValueFactory(new PropertyValueFactory<>("nomFranchise"));
+
+        //ajout boutons
+        btnModif();
+        btnSupp();
+
         ObservableList<Cinema> data = getCinema();
         tvCinema.setItems(data);
     }

@@ -7,6 +7,7 @@ public class Cinema {
     private String adresse;
     private String ville;
     private int idFranchise;
+    private String nomFranchise;
 
     public Cinema(int idCinema, String denomination, String adresse, String ville, int idFranchise) {
         this.idCinema = idCinema;
@@ -52,4 +53,11 @@ public class Cinema {
         this.idFranchise = idFranchise;
     }
 
+    public String getNomFranchise() {
+        return nomFranchise;
+    }
+
+    public void setNomFranchise(String nomFranchise) {
+        this.nomFranchise = nomFranchise;
+    }
 }

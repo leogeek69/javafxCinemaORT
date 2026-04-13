@@ -138,6 +138,11 @@
                 <Insets top="15" bottom="20" />
             </padding>
 
+            <Button fx:id="bEnregistrer"
+                    text="Enregistrer"
+                    onAction="#bEnregistrerClick"
+                    styleClass="action-button" />
+
             <Button fx:id="bRetour"
                 text="Retour"
                 onAction="#bRetourClick"
@@ -148,10 +153,6 @@
                 onAction="#bEffacerClick"
                 styleClass="action-button" />
 
-            <Button fx:id="bEnregistrer"
-                text="Enregistrer"
-                onAction="#bEnregistrerClick"
-                styleClass="action-button" />
-        </HBox>
+            </HBox>
     </bottom>
 </BorderPane>
