@@ -116,7 +116,7 @@ public class MenuController {
         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_liste_cinemaa.fxml"));
+                    getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
             Parent root = fxmlLoader.load();
 
             ListeCinemaController listeSectionController = fxmlLoader.getController();

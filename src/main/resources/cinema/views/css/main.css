@@ -23,7 +23,7 @@
 }
 
 .action-button {
-    -fx-font-size: 7px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-text-fill: #024010;
 }

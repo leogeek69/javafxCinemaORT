@@ -76,7 +76,7 @@
                             </HBox.margin>
                         </Label>
                         <!--à changer car login en dur-->
-                        <TextField fx:id="tfLogin" prefHeight="31.0" prefWidth="262.0" text="jean.dupont@email.com">
+                        <TextField fx:id="tfLogin" prefHeight="31.0" prefWidth="262.0" text="">
                             <opaqueInsets>
                                 <Insets top="15.0" />
                             </opaqueInsets>
@@ -97,7 +97,7 @@
                             </HBox.margin>
                         </Label>
                         <!--à changer car mdp en dur-->
-                        <PasswordField fx:id="tfMDP" prefHeight="25.3" prefWidth="262.0" text="jean">
+                        <PasswordField fx:id="tfMDP" prefHeight="25.3" prefWidth="262.0" text="">
                             <HBox.margin>
                                 <Insets bottom="10.0" left="5.0" top="5.0" />
                             </HBox.margin>

@@ -83,20 +83,32 @@ public class AjouterFranchiseController extends MenuController implements Initia
     @FXML
     public void bEnregistrerClick(ActionEvent event) {
 
-        String x = tfNomFranchise.getText();
-        String y = tfSiegeSocial.getText();
+        String nomFranchise = tfNomFranchise.getText();
+        String siegeSocial = tfSiegeSocial.getText();
+        Utilisateur gerantSelect = lvGerantFranchise.getSelectionModel().getSelectedItem();
 
-        int z = 1;
-        Franchise bloup = new Franchise(0, x, y, z);
+        //on vérifie que rien n'est vide et qu'un gérant est bien cliqué
+        if (nomFranchise == null || nomFranchise.isEmpty() ||
+                siegeSocial == null || siegeSocial.isEmpty() ||
+                gerantSelect == null) {
+
+        System.out.println("Erreur : Vous devez remplir tous les champs");
+
+            return;
+        }
+
+        //si c'est sélectionné on valides
+        int id = gerantSelect.getIdUtilisateur();
+        Franchise franchise = new Franchise(0, nomFranchise, siegeSocial, id);
 
         FranchiseDAO franchiseDAO = new FranchiseDAO();
-        boolean controle = franchiseDAO.create(bloup);
+        boolean controle = franchiseDAO.create(franchise);
+
         if (controle) {
             tfNomFranchise.clear();
             tfSiegeSocial.clear();
             lvGerantFranchise.getSelectionModel().clearSelection();
         }
-
     }
 
     @FXML
