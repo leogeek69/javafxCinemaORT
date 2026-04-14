@@ -53,11 +53,7 @@ public class Cinema {
         this.idFranchise = idFranchise;
     }
 
-    public String getNomFranchise() {
-        return nomFranchise;
-    }
-
-    public void setNomFranchise(String nomFranchise) {
-        this.nomFranchise = nomFranchise;
+    public String toString(){
+        return "id cinema = " + idCinema + "denomination = " + denomination + "l'adresse est = "+ adresse + "la ville est = " + ville + "l'id de la franchise est = " + idFranchise;
     }
 }
