@@ -125,14 +125,14 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                 String mdpEnBDD = rs.getString("mdp");
                 boolean mdpOk = false;
 
-                // ✅ Si le mdp en BDD commence par $2a$ c'est un hash BCrypt
+                // si le mdp en BDD commence par $2a$ c'est un hash BCrypt
                 if (mdpEnBDD.startsWith("$2a$")) {
                     mdpOk = BCrypt.checkpw(mdp, mdpEnBDD);
                 } else {
-                    // ❌ Mdp en clair, on compare directement
+                    // mdp en clair, on compare directement
                     mdpOk = mdpEnBDD.equals(mdp);
 
-                    // ✅ Et on en profite pour le migrer vers BCrypt
+                    // et on en profite pour le migrer vers BCrypt
                     if (mdpOk) {
                         String mdpHashe = BCrypt.hashpw(mdp, BCrypt.gensalt());
                         String sqlUpdate = "UPDATE utilisateur SET mdp = ? WHERE login = ?";
