@@ -60,7 +60,7 @@
                             onAction="#bAjouterCinemaClick" text="Ajouter une cinema" />
                     </items>
                 </Menu>
-                <Menu fx:id="gestionSalle" mnemonicParsing="false" text="Gestion cinema">
+                <Menu fx:id="gestionSalle" mnemonicParsing="false" text="Gestion salle">
                     <graphic>
                         <ImageView fitHeight="16" fitWidth="16">
                             <image>
@@ -70,9 +70,9 @@
                     </graphic>
                     <items>
                         <MenuItem fx:id="bListeSalle" mnemonicParsing="false"
-                            onAction="#bListeSalleClick" text="Liste cinema" />
+                            onAction="#bListeSalleClick" text="Liste salle" />
                         <MenuItem fx:id="bAjouterSalle" mnemonicParsing="false"
-                            onAction="#bAjouterSalleClick" text="Ajouter un cinema" />
+                            onAction="#bAjouterSalleClick" text="Ajouter un salle" />
                     </items>
                 </Menu>
                 <Menu fx:id="bAutres" mnemonicParsing="false" text="Autres">
