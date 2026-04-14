@@ -148,6 +148,11 @@ public class UtilisateurDAO extends DAO<Utilisateur> {
                     u.setIdUtilisateur(rs.getInt("id_Utilisateur"));
                     u.setLogin(rs.getString("login"));
                     u.setMdp(rs.getString("mdp"));
+
+                    //on récupère le nom prénom pour l'accueil
+                    u.setNom(rs.getString("nom"));
+                    u.setPrenom(rs.getString("prenom"));
+
                     return u;
                 }
             }
