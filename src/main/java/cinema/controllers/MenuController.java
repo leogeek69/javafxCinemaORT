@@ -137,13 +137,14 @@ public class MenuController {
 
     @FXML
     public void bAjouterCinemaClick(ActionEvent event) {
-        Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
-        stageP.close();
-        try {
+         try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(
                     getClass().getResource("/cinema/views/page_ajout_section.fxml"));
             Parent root = fxmlLoader.load();
+
+            Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+            stageP.close();
 
             Stage stage = new Stage();
             stage.setTitle("Ajout d'une Section");
@@ -160,14 +161,16 @@ public class MenuController {
 
     @FXML
     public void bListeSalleClick(ActionEvent event) {
-        Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
-        stageP.close();
+
         try {
 
             // Charger le fichier FXML
             FXMLLoader fxmlLoader = new FXMLLoader(
                     getClass().getResource("/cinema/views/page_liste_cours.fxml"));
             Parent root = fxmlLoader.load();
+
+            Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+            stageP.close();
 
             // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
@@ -191,14 +194,16 @@ public class MenuController {
 
     @FXML
     public void bAjouterSalleClick(ActionEvent event) {
-        Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
-        stageP.close();
+
         try {
 
             // Charger le fichier FXML
             FXMLLoader fxmlLoader = new FXMLLoader(
                     getClass().getResource("/cinema/views/page_ajout_cours.fxml"));
             Parent root = fxmlLoader.load();
+
+            Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
+            stageP.close();
 
             // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
