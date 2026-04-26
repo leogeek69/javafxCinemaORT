@@ -94,13 +94,15 @@ public class ListeCinemaController extends MenuController implements Initializab
             {
                 btn.setOnAction(event -> {
                     Cinema cinema = getTableView().getItems().get(getIndex());
-                    Stage stageP = (Stage) bRetour.getScene().getWindow();
-                    stageP.close();
 
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(
                                 getClass().getResource("/cinema/views/page_modif_cinema.fxml"));
                         Parent root = fxmlLoader.load();
+
+                        Stage stageP = (Stage) bRetour.getScene().getWindow();
+                        stageP.close();
+
 
                         Stage stage = new Stage();
                         stage.setTitle("Modification cinema");
@@ -149,6 +151,7 @@ public class ListeCinemaController extends MenuController implements Initializab
                             stage.show();
                         } catch (Exception e) {
                             e.printStackTrace();
+                            System.out.println("Info : La pop-up de suppression n'est pas encore creee");
                         }
                     } else {
                         tvCinema.getItems().remove(cinema);
