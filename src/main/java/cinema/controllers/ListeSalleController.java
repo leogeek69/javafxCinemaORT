@@ -56,15 +56,15 @@ public class ListeSalleController extends MenuController implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         CinemaDAO cinemaDAO = new CinemaDAO();
 
-        // Récupération de tous les cinémas pour mapper l'idCinema avec le nom du cinéma
+
         Map<Integer, Cinema> cinemas = cinemaDAO.findAll()
                 .stream()
                 .collect(Collectors.toMap(Cinema::getIdCinema, c -> c));
 
-        // Affichage personnalisé pour la colonne Cinéma
+
         tcCinema.setCellValueFactory(cellData -> {
             Cinema cinema = cinemas.get(cellData.getValue().getIdCinema());
-            // On suppose que ta classe Cinema a une méthode getDenomination() (basé sur ton SQL)
+
             return new SimpleStringProperty(
                     cinema != null ? cinema.getDenomination() : "Aucun cinéma");
         });
@@ -134,7 +134,7 @@ public class ListeSalleController extends MenuController implements Initializabl
                                 getClass().getResource("/cinema/views/page_modif_salle.fxml"));
                         Parent root = fxmlLoader.load();
 
-                        // Assure-toi d'avoir créé le ModifierSalleController avec ces méthodes
+
                         /*ModifierSalleController modifierSalleCtrl = fxmlLoader.getController();
                         modifierSalleCtrl.setAttributes(salle);
                         modifierSalleCtrl.setName(nameUti);*/
@@ -168,7 +168,7 @@ public class ListeSalleController extends MenuController implements Initializabl
                     Salle salle = getTableView().getItems().get(getIndex());
                     // Suppression de la vue
                     tvSalles.getItems().remove(salle);
-                    // Suppression en base de données
+                    // Suppression en bdd
                     SalleDAO salleDAO = new SalleDAO();
                     salleDAO.delete(salle);
                 });
