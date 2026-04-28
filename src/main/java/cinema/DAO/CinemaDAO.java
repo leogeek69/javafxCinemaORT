@@ -118,8 +118,8 @@ public class CinemaDAO extends DAO<Cinema> {
 
     public List<Cinema> getAllVille() {
         List<Cinema> cinemas = new ArrayList<Cinema>();
-        String query = "SELECT c.ville " +
-                "FROM cinema c ;";
+        String query = "SELECT id_cinema, denomination, adresse, ville, id_franchise " +
+                "FROM cinema ;";
 
         try (PreparedStatement preparedStatement = this.connect.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -132,7 +132,7 @@ public class CinemaDAO extends DAO<Cinema> {
                         resultSet.getString("ville"),
                         resultSet.getInt("id_franchise"));
 
-                cinema.setNomFranchise(resultSet.getString("nom_franchise"));
+                //cinema.setNomFranchise(resultSet.getString("nom_franchise"));
                 cinemas.add(cinema);
             }
         } catch (SQLException e) {
