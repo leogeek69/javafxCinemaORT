@@ -169,6 +169,10 @@ public class MenuController {
                     getClass().getResource("/cinema/views/page_liste_salle.fxml"));
             Parent root = fxmlLoader.load();
 
+            // Charger controller pour faire passer le nameUti
+            ListeSalleController listeSalleController = fxmlLoader.getController();
+            listeSalleController.setName(nameUti);
+
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
             stageP.close();
 
