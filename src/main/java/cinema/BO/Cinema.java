@@ -17,6 +17,10 @@ public class Cinema {
         this.idFranchise = idFranchise;
     }
 
+    public Cinema() {
+
+    }
+
     public int getIdCinema() {
         return idCinema;
     }
