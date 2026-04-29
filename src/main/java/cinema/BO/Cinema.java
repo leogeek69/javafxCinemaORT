@@ -17,6 +17,10 @@ public class Cinema {
         this.idFranchise = idFranchise;
     }
 
+    public Cinema() {
+
+    }
+
     public int getIdCinema() {
         return idCinema;
     }
@@ -62,6 +66,6 @@ public class Cinema {
     }
 
     public String toString(){
-        return "id cinema = " + idCinema + "denomination = " + denomination + "l'adresse est = "+ adresse + "la ville est = " + ville + "l'id de la franchise est = " + idFranchise;
+        return this.getDenomination();//"id cinema = " + idCinema + "denomination = " + denomination + "l'adresse est = "+ adresse + "la ville est = " + ville + "l'id de la franchise est = " + idFranchise;
     }
 }

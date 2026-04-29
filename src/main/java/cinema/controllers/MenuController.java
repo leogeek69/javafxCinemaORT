@@ -140,7 +140,7 @@ public class MenuController {
          try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_ajout_section.fxml"));
+                    getClass().getResource("/cinema/views/page_ajout_cinema.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();

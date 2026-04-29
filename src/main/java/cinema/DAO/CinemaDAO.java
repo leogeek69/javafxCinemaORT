@@ -1,12 +1,12 @@
 package cinema.DAO;
 
+import cinema.BO.Cinema;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cinema.BO.Cinema;
 
 public class CinemaDAO extends DAO<Cinema> {
 
@@ -107,6 +107,32 @@ public class CinemaDAO extends DAO<Cinema> {
                         resultSet.getInt("id_franchise"));
 
                 cinema.setNomFranchise(resultSet.getString("nom_franchise"));
+                cinemas.add(cinema);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cinemas;
+    }
+
+    public List<Cinema> getAllVille() {
+        List<Cinema> cinemas = new ArrayList<Cinema>();
+        String query = "SELECT id_cinema, denomination, adresse, ville, id_franchise " +
+                "FROM cinema ;";
+
+        try (PreparedStatement preparedStatement = this.connect.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Cinema cinema = new Cinema(
+                        resultSet.getInt("id_cinema"),
+                        resultSet.getString("denomination"),
+                        resultSet.getString("adresse"),
+                        resultSet.getString("ville"),
+                        resultSet.getInt("id_franchise"));
+
+                //cinema.setNomFranchise(resultSet.getString("nom_franchise"));
                 cinemas.add(cinema);
             }
         } catch (SQLException e) {
