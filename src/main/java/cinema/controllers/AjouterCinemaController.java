@@ -86,7 +86,7 @@ public class AjouterCinemaController extends MenuController implements Initializ
 
             // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
-            stage.setTitle("Liste cinemas");
+            stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
 
             // Configurer la fenêtre en tant que modal

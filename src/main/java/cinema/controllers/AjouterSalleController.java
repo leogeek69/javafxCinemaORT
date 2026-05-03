@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
 public class AjouterSalleController extends MenuController implements Initializable {
 
     @FXML
-    private TextField tfNumSalle, tfDescSalle, tfNbPlaces;
+    private TextField tfNumSalle, tfDescSalle, tfNbPlaces, tfParticularite;
     @FXML
     private Button bRetour;
     @FXML
@@ -50,6 +50,7 @@ public class AjouterSalleController extends MenuController implements Initializa
             //on récupère et on convertit des champs
             int numSalle = Integer.parseInt(tfNumSalle.getText());
             String descSalle = tfDescSalle.getText();
+            String particularite = tfParticularite.getText();
             int nbPlaces = Integer.parseInt(tfNbPlaces.getText());
             Cinema cinemaSelectionne = lvCinema.getSelectionModel().getSelectedItem();
 
@@ -60,21 +61,21 @@ public class AjouterSalleController extends MenuController implements Initializa
             }
 
             //création de l'objet Salle
-            Salle nouvelleSalle = new Salle(0, numSalle, descSalle, nbPlaces, cinemaSelectionne.getIdCinema());
+            Salle nouvelleSalle = new Salle(0, numSalle, descSalle, particularite, nbPlaces, cinemaSelectionne.getIdCinema());
 
             // Sauvegarde en base de données
             SalleDAO salleDAO = new SalleDAO();
             boolean controle = salleDAO.create(nouvelleSalle);
 
             if (controle) {
-                System.out.println("Succès : La salle a bien été ajoutée.");
+                System.out.println("Succes : La salle a bien été ajoutee.");
                 bEffacerClick(null); //on vide le formulaire après l'ajout
             } else {
-                System.out.println("Erreur : Problème lors de l'insertion en base de données.");
+                System.out.println("Erreur : Probleme lors de l'insertion en base de donnees.");
             }
 
         } catch (NumberFormatException e) {
-            System.out.println("Erreur : Le numéro de salle et le nombre de places doivent être des nombres entiers.");
+            System.out.println("Erreur");
         }
     }
 
@@ -82,6 +83,7 @@ public class AjouterSalleController extends MenuController implements Initializa
     public void bEffacerClick(ActionEvent event) {
         if (tfNumSalle != null) tfNumSalle.clear();
         if (tfDescSalle != null) tfDescSalle.clear();
+        if (tfParticularite != null) tfParticularite.clear();
         if (tfNbPlaces != null) tfNbPlaces.clear();
         if (lvCinema != null) lvCinema.getSelectionModel().clearSelection();
     }
@@ -104,7 +106,7 @@ public class AjouterSalleController extends MenuController implements Initializa
 
             // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
-            stage.setTitle("Liste franchises");
+            stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
 
             // Configurer la fenêtre en tant que modal
