@@ -125,7 +125,7 @@ public class ModifierSalleController extends MenuController implements Initializ
             listeSalleController.setName(nameUti);
 
             Stage stage = new Stage();
-            stage.setTitle("Liste salles");
+            stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
