@@ -92,7 +92,7 @@ public class CinemaDAO extends DAO<Cinema> {
     public List<Cinema> findAll() {
         List<Cinema> cinemas = new ArrayList<Cinema>();
         String query = "SELECT c.*, f.nom_franchise " +
-                "FROM cinema c " +
+                " FROM cinema c " +
                 "INNER JOIN franchise f ON c.id_franchise = f.id_franchise;";
 
         try (PreparedStatement preparedStatement = this.connect.prepareStatement(query);
@@ -118,21 +118,14 @@ public class CinemaDAO extends DAO<Cinema> {
 
     public List<Cinema> getAllVille() {
         List<Cinema> cinemas = new ArrayList<Cinema>();
-        String query = "SELECT id_cinema, denomination, adresse, ville, id_franchise " +
+        String query = "SELECT DISTINCT ville " +
                 "FROM cinema ;";
 
         try (PreparedStatement preparedStatement = this.connect.prepareStatement(query);
              ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
-                Cinema cinema = new Cinema(
-                        resultSet.getInt("id_cinema"),
-                        resultSet.getString("denomination"),
-                        resultSet.getString("adresse"),
-                        resultSet.getString("ville"),
-                        resultSet.getInt("id_franchise"));
-
-                //cinema.setNomFranchise(resultSet.getString("nom_franchise"));
+                Cinema cinema = new Cinema(resultSet.getString("ville"));
                 cinemas.add(cinema);
             }
         } catch (SQLException e) {
@@ -141,5 +134,4 @@ public class CinemaDAO extends DAO<Cinema> {
 
         return cinemas;
     }
-
 }
