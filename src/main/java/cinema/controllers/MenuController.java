@@ -140,14 +140,17 @@ public class MenuController {
          try {
 
             FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_ajout_section.fxml"));
+                    getClass().getResource("/cinema/views/page_ajout_cinema.fxml"));
             Parent root = fxmlLoader.load();
+
+             AjouterCinemaController ajouterCinemaController = fxmlLoader.getController();
+             ajouterCinemaController.setName(nameUti);
 
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
             stageP.close();
 
             Stage stage = new Stage();
-            stage.setTitle("Ajout d'une Section");
+            stage.setTitle("Ajout d'un Cinéma");
             stage.setScene(new Scene(root));
 
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -208,6 +211,9 @@ public class MenuController {
 
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
             stageP.close();
+
+            AjouterSalleController ajouterSalleController = fxmlLoader.getController();
+            ajouterSalleController.setName(nameUti);
 
             // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();

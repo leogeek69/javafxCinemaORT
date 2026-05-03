@@ -1,12 +1,12 @@
 package cinema.DAO;
 
+import cinema.BO.Cinema;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-
-import cinema.BO.Cinema;
 
 public class CinemaDAO extends DAO<Cinema> {
 
@@ -92,7 +92,7 @@ public class CinemaDAO extends DAO<Cinema> {
     public List<Cinema> findAll() {
         List<Cinema> cinemas = new ArrayList<Cinema>();
         String query = "SELECT c.*, f.nom_franchise " +
-                "FROM cinema c " +
+                " FROM cinema c " +
                 "INNER JOIN franchise f ON c.id_franchise = f.id_franchise;";
 
         try (PreparedStatement preparedStatement = this.connect.prepareStatement(query);
@@ -116,4 +116,22 @@ public class CinemaDAO extends DAO<Cinema> {
         return cinemas;
     }
 
+    public List<Cinema> getAllVille() {
+        List<Cinema> cinemas = new ArrayList<Cinema>();
+        String query = "SELECT DISTINCT ville " +
+                "FROM cinema ;";
+
+        try (PreparedStatement preparedStatement = this.connect.prepareStatement(query);
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Cinema cinema = new Cinema(resultSet.getString("ville"));
+                cinemas.add(cinema);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cinemas;
+    }
 }

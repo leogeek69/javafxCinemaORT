@@ -10,7 +10,8 @@ public class Franchise {
     private SimpleStringProperty siegeSocial = new SimpleStringProperty();
     private int idGerant;
 
-    public Franchise() {
+    public Franchise(String nomFranchise) {
+        this.nomFranchise.set(nomFranchise);
     }
 
     public Franchise(int idFranchise, String nomFranchise, String siegeSocial, int idGerant) {
@@ -18,6 +19,10 @@ public class Franchise {
         this.nomFranchise.set(nomFranchise);
         this.siegeSocial.set(siegeSocial);
         this.idGerant = idGerant;
+    }
+
+    public Franchise(SimpleStringProperty nomFracnhise){
+        this.nomFranchise = nomFracnhise;
     }
 
     public int getIdFranchise() {
@@ -58,7 +63,7 @@ public class Franchise {
 
     @Override
     public String toString() {
-        return "Franchise [idFranchise=" + idFranchise + ", nomFranchise=" + nomFranchise + ", siegeSocial="
-                + siegeSocial + ", idGerant=" + idGerant + "]";
+        return nomFranchise.get();/*"Franchise [idFranchise=" + idFranchise + ", nomFranchise=" + nomFranchise + ", siegeSocial="
+                + siegeSocial + ", idGerant=" + idGerant + "]";*/
     }
 }

@@ -17,6 +17,11 @@ public class Cinema {
         this.idFranchise = idFranchise;
     }
 
+    public Cinema(String ville){
+        this.ville = ville;
+    }
+
+
     public int getIdCinema() {
         return idCinema;
     }
@@ -62,6 +67,12 @@ public class Cinema {
     }
 
     public String toString(){
-        return "id cinema = " + idCinema + "denomination = " + denomination + "l'adresse est = "+ adresse + "la ville est = " + ville + "l'id de la franchise est = " + idFranchise;
+        //si la dénomination est pas nulle c qu'on est dans la page "Ajouter Salle"
+        if (this.denomination != null && !this.denomination.isEmpty()) {
+            return this.denomination + " (" + this.ville + ")";
+        }
+
+        //sinon c'est qu'on a créé l'objet juste avec la ville pour la page "Ajouter Cinéma"
+        return this.ville;
     }
 }

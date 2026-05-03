@@ -1,13 +1,13 @@
 package cinema.DAO;
 
+import cinema.BO.Franchise;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import cinema.BO.Franchise;
 
 public class FranchiseDAO extends DAO<Franchise> {
 
@@ -149,5 +149,19 @@ public class FranchiseDAO extends DAO<Franchise> {
                 resultSet.getString("nom_franchise"),
                 resultSet.getString("siege_social"),
                 resultSet.getInt("id_gerant"));
+    }
+
+    public List<Franchise> getNomFranchise() {
+        List<Franchise> mesFranchises = new ArrayList<Franchise>();
+        String query = "SELECT nom_franchise" + " FROM franchise";
+        try (PreparedStatement preparedStatement = this.connect.prepareStatement(query); ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Franchise franchise = new Franchise(resultSet.getString("nom_franchise"));
+                mesFranchises.add(franchise);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }return mesFranchises;
     }
 }
