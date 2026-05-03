@@ -15,12 +15,13 @@ public class SalleDAO extends DAO<Salle> {
     public boolean create(Salle obj) {
         boolean controle = false;
         try {
-            String query = "INSERT INTO salle(numero, description, nb_places, id_cinema) VALUES (?, ?, ?, ?);";
+            String query = "INSERT INTO salle(numero, description, particularité, nb_places, id_cinema) VALUES (?, ?, ?, ?, ?);";
             PreparedStatement statement = this.connect.prepareStatement(query);
             statement.setInt(1, obj.getNumSalle());
             statement.setString(2, obj.getDescSalle());
-            statement.setInt(3, obj.getNbPlaces());
-            statement.setInt(4, obj.getIdCinema());
+            statement.setString(3, obj.getParticularite());
+            statement.setInt(4, obj.getNbPlaces());
+            statement.setInt(5, obj.getIdCinema());
 
             int rowsInserted = statement.executeUpdate();
             if (rowsInserted > 0) {
@@ -56,13 +57,14 @@ public class SalleDAO extends DAO<Salle> {
     public boolean update(Salle obj) {
         boolean controle = false;
         try {
-            String query = "UPDATE salle SET numero = ?, description = ?, nb_places = ?, id_cinema = ? WHERE id_salle = ?";
+            String query = "UPDATE salle SET numero = ?, description = ?, particularité = ?, nb_places = ?, id_cinema = ? WHERE id_salle = ?";
             PreparedStatement statement = this.connect.prepareStatement(query);
             statement.setInt(1, obj.getNumSalle());
             statement.setString(2, obj.getDescSalle());
-            statement.setInt(3, obj.getNbPlaces());
-            statement.setInt(4, obj.getIdCinema());
-            statement.setInt(5, obj.getIdSalle());
+            statement.setString(3, obj.getParticularite());
+            statement.setInt(4, obj.getNbPlaces());
+            statement.setInt(5, obj.getIdCinema());
+            statement.setInt(6, obj.getIdSalle());
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -135,6 +137,7 @@ public class SalleDAO extends DAO<Salle> {
                 resultSet.getInt("id_salle"),
                 resultSet.getInt("numero"),
                 resultSet.getString("description"),
+                resultSet.getString("particularité"),
                 resultSet.getInt("nb_places"),
                 resultSet.getInt("id_cinema")
         );

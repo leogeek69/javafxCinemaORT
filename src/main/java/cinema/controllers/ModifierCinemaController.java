@@ -101,7 +101,7 @@ public class ModifierCinemaController extends MenuController implements Initiali
             listeCinemaController.setName(nameUti);
 
             Stage stage = new Stage();
-            stage.setTitle("Liste franchises");
+            stage.setTitle("Accueil Gestion de Franchisess");
             stage.setScene(new Scene(root));
 
             stage.initModality(Modality.APPLICATION_MODAL);
