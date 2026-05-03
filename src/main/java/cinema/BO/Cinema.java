@@ -17,6 +17,10 @@ public class Cinema {
         this.idFranchise = idFranchise;
     }
 
+    public Cinema(){
+
+    }
+
     public Cinema(String ville){
         this.ville = ville;
     }

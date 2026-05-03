@@ -126,6 +126,21 @@ public class FranchiseDAO extends DAO<Franchise> {
         return mesFranchises;
     }
 
+    public Franchise findByNom(String nom) {
+        try {
+            String query = "SELECT * FROM franchise WHERE nom_franchise = ?";
+            PreparedStatement ps = this.connect.prepareStatement(query);
+            ps.setString(1, nom);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return hydrate(rs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Franchise> getAllByGerant(int idSection) {
         List<Franchise> mesFranchises = new ArrayList<>();
         Franchise franchise;
