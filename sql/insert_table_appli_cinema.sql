@@ -26,6 +26,7 @@ VALUES
 INSERT INTO
 	franchise (nom_franchise, siege_social, id_gerant)
 VALUES
+    -- a voir si on joute cette ligne ? ('CineForAll', ' 133 Rue Marius Berliet, Lyon', 1),
 	('CinéMax', '12 rue de la Paix, Paris', 1),
 	('Écran Total', '45 avenue des Arts, Lyon', 2);
 

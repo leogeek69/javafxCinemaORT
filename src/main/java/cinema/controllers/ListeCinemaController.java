@@ -94,14 +94,16 @@ public class ListeCinemaController extends MenuController implements Initializab
             {
                 btn.setOnAction(event -> {
                     Cinema cinema = getTableView().getItems().get(getIndex());
-
+                    Stage stageP = (Stage) bRetour.getScene().getWindow();
+                    stageP.close();
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(
                                 getClass().getResource("/cinema/views/page_modif_cinema.fxml"));
                         Parent root = fxmlLoader.load();
 
-                        Stage stageP = (Stage) bRetour.getScene().getWindow();
-                        stageP.close();
+                        ModifierCinemaController modifierCinemaCtrl = fxmlLoader.getController();
+                        modifierCinemaCtrl.setAttributes(cinema);
+                        modifierCinemaCtrl.setName(nameUti);
 
 
                         Stage stage = new Stage();
