@@ -12,7 +12,6 @@
             stylesheets="@./css/main.css">
 
     <top>
-        <!-- J'ai conservé ta MenuBar exacte pour garder la cohérence de ton UI -->
         <MenuBar>
             <menus>
                 <Menu fx:id="gestionFranchise" mnemonicParsing="false" text="Gestion franchises">
@@ -91,11 +90,14 @@
                 <Label text="Description :" styleClass="form-label" GridPane.rowIndex="1" GridPane.columnIndex="0" />
                 <TextField fx:id="tfDescSalle" GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-                <Label text="Nombre de places :" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
-                <TextField fx:id="tfNbPlaces" GridPane.rowIndex="2" GridPane.columnIndex="1" />
+                <Label text="Particularité :" styleClass="form-label" GridPane.rowIndex="2" GridPane.columnIndex="0" />
+                <TextField fx:id="tfParticularite" GridPane.rowIndex="2" GridPane.columnIndex="1" />
 
-                <Label text="Cinéma :" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
-                <ListView fx:id="lvCinema" prefHeight="120" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+                 <Label text="Nombre de places :" styleClass="form-label" GridPane.rowIndex="3" GridPane.columnIndex="0" />
+                <TextField fx:id="tfNbPlaces" GridPane.rowIndex="3" GridPane.columnIndex="1" />
+
+                <Label text="Cinéma :" styleClass="form-label" GridPane.rowIndex="4" GridPane.columnIndex="0" />
+                <ListView fx:id="lvCinema" prefHeight="120" GridPane.rowIndex="4" GridPane.columnIndex="1" />
 
             </GridPane>
         </VBox>
