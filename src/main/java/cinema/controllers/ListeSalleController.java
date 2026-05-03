@@ -135,9 +135,9 @@ public class ListeSalleController extends MenuController implements Initializabl
                         Parent root = fxmlLoader.load();
 
 
-                        /*ModifierSalleController modifierSalleCtrl = fxmlLoader.getController();
+                        ModifierSalleController modifierSalleCtrl = fxmlLoader.getController();
                         modifierSalleCtrl.setAttributes(salle);
-                        modifierSalleCtrl.setName(nameUti);*/
+                        modifierSalleCtrl.setName(nameUti);
 
                         Stage stage = new Stage();
                         stage.setTitle("Modification salle");
