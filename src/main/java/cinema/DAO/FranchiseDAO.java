@@ -164,4 +164,17 @@ public class FranchiseDAO extends DAO<Franchise> {
             e.printStackTrace();
         }return mesFranchises;
     }
+
+    public List<String> getNomFranchiseString() {
+        List<String> mesFranchises = new ArrayList<>();
+        String query ="SELECT DISTINCT nom_franchise FROM franchise";
+        try (PreparedStatement ps = this.connect.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                mesFranchises.add(rs.getString("nom_franchise"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }return mesFranchises;
+    }
 }
