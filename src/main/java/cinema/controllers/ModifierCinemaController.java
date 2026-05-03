@@ -1,10 +1,11 @@
 package cinema.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import cinema.BO.Cinema;
+import cinema.BO.Franchise;
 import cinema.DAO.CinemaDAO;
+import cinema.DAO.FranchiseDAO;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,33 +13,76 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ModifierCinemaController extends MenuController implements Initializable {
 
     @FXML
     private TextArea taLibSec;
 
-    private int idSec;
+    @FXML
+    private TextField tfNomCinema, tfAdresseCinema;
+
+    @FXML
+    private ListView<String> lvVille;
+
+    @FXML
+    private ListView<String> lvNomFranchise;
+
+    private int idCin;
 
     @FXML
     private Button bRetour, bEnregistrer;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // Villes
+        CinemaDAO cinemaDAO = new CinemaDAO();
+        List<String> villes = cinemaDAO.getVilles();
+        lvVille.setItems(FXCollections.observableArrayList(villes));
+
+        // Franchises
+        FranchiseDAO franchiseDAO = new FranchiseDAO();
+        List<String> franchises = franchiseDAO.getNomFranchiseString();
+        lvNomFranchise.setItems(FXCollections.observableArrayList(franchises));
+    }
+
+    public void setIdSec(int idCin) {
+        this.idCin = idCin;
+    }
+
+    private ObservableList<Franchise> getNomFranchise() {
+
+        FranchiseDAO franchiseDAO = new FranchiseDAO();
+        List<Franchise> franchise = franchiseDAO.getNomFranchise();
+
+        ObservableList<Franchise> liste = FXCollections.observableArrayList(franchise);
+        return liste;
 
     }
 
-    public void setIdSec(int idSec) {
-        this.idSec = idSec;
+    private ObservableList<Cinema> getVilleCinemaList() {
+
+        CinemaDAO cinemaDAO = new CinemaDAO();
+        List<Cinema> cinemas = cinemaDAO.getAllVille();
+
+        ObservableList<Cinema> list = FXCollections.observableArrayList(cinemas);
+        return list;
+
     }
 
-    public void setAttrinuts() {
-        CinemaDAO sectionDAO = new CinemaDAO();
-        Cinema sec = sectionDAO.find(idSec);
-        taLibSec.setText(sec.getDenomination());
+    public void setAttributes(Cinema cinema) {
+        tfNomCinema.setText(cinema.getDenomination());
+        tfAdresseCinema.setText(cinema.getAdresse());
+        lvVille.getSelectionModel().select(cinema.getVille());
+        lvNomFranchise.getSelectionModel().select(cinema.getNomFranchise());
     }
 
     @FXML
@@ -71,9 +115,9 @@ public class ModifierCinemaController extends MenuController implements Initiali
     private void bEnregistrerClick(ActionEvent event) {
         String lib = taLibSec.getText();
         if (!lib.trim().isEmpty()) {
-            Cinema sec = new Cinema(idSec, lib, lib, lib, idSec);
-            CinemaDAO sectionDAO = new CinemaDAO();
-            boolean controle = sectionDAO.update(sec);
+            Cinema sec = new Cinema(idCin, lib, lib, lib, idCin);
+            CinemaDAO cinemaDAO = new CinemaDAO();
+            boolean controle = cinemaDAO.update(sec);
             if (controle) {
                 Stage stageP = (Stage) bRetour.getScene().getWindow();
                 stageP.close();

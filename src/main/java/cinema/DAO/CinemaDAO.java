@@ -134,4 +134,18 @@ public class CinemaDAO extends DAO<Cinema> {
 
         return cinemas;
     }
+
+    public List<String> getVilles() {
+        List<String> villes = new ArrayList<>();
+        String query = "SELECT DISTINCT ville FROM cinema";
+        try (PreparedStatement ps = this.connect.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                villes.add(rs.getString("ville"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return villes;
+    }
 }
