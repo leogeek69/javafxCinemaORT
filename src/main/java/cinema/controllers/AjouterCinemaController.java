@@ -15,6 +15,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
@@ -32,22 +33,38 @@ public class AjouterCinemaController extends MenuController implements Initializ
     private Button bRetour;
     @FXML
     private ListView<Cinema> lvVille;
+    @FXML
+    private ListView<Franchise> lvNomFranchise;
+    @FXML
+    private ComboBox<String> comboBoxAdresses;
 
 
     public void initialize(URL location, ResourceBundle resources) {
+        // Récupérer la liste des villes des cinémas
+        ObservableList<Cinema> cinemasVille = getVilleCinemaList();
+        lvVille.setItems(cinemasVille);
 
-        ObservableList<Cinema> cinemas = getCinemaList();
-
-        lvVille.setItems(cinemas);
+        ObservableList<Franchise> nomFranchise = getNomFranchise();
+        lvNomFranchise.setItems(nomFranchise);
     }
 
-    private ObservableList<Cinema> getCinemaList() {
+    private ObservableList<Cinema> getVilleCinemaList() {
 
         CinemaDAO cinemaDAO = new CinemaDAO();
         List<Cinema> cinemas = cinemaDAO.getAllVille();
 
         ObservableList<Cinema> list = FXCollections.observableArrayList(cinemas);
         return list;
+
+    }
+
+    private ObservableList<Franchise> getNomFranchise() {
+
+        FranchiseDAO franchiseDAO = new FranchiseDAO();
+        List<Franchise> franchise = franchiseDAO.getNomFranchise();
+
+        ObservableList<Franchise> liste = FXCollections.observableArrayList(franchise);
+        return liste;
 
     }
 
@@ -103,7 +120,7 @@ public class AjouterCinemaController extends MenuController implements Initializ
         //si c'est sélectionné on valides
         String ville = villeCinema.getDenomination();
         int idCinema = villeCinema.getIdFranchise();
-        Cinema cinema = new Cinema(0, nomCinema, adresseCinema, ville, idCinema);
+        Cinema cinema = new Cinema(0, nomCinema, adresseCinema , ville, idCinema);
 
         CinemaDAO cinemaDAO = new CinemaDAO();
         boolean controle = cinemaDAO.create(cinema);
@@ -119,8 +136,7 @@ public class AjouterCinemaController extends MenuController implements Initializ
     public void bEffacerClick(ActionEvent event) {
         if (tfDenominationCinema != null)
             tfDenominationCinema.clear();
-        if (tfAdresseCinema != null)
-            tfAdresseCinema.clear();
+        tfAdresseCinema.clear();
         lvVille.getSelectionModel().clearSelection();
     }
 }

@@ -128,6 +128,15 @@
                           GridPane.rowIndex="2"
                           GridPane.columnIndex="1" />
 
+                <Label text="Nom de la franchise :" styleClass="form-label"
+                       GridPane.rowIndex="3"
+                       GridPane.columnIndex="0" />
+
+                <ListView fx:id="lvNomFranchise"
+                          prefHeight="120"
+                          GridPane.rowIndex="3"
+                          GridPane.columnIndex="1" />
+
             </GridPane>
         </VBox>
     </center>
