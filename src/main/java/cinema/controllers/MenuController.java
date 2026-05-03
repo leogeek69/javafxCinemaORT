@@ -35,9 +35,10 @@ public class MenuController {
 
             AccueilController accueilController = fxmlLoader.getController();
             accueilController.setName(nameUti);
+            accueilController.setBienvenue();
 
             Stage stage = new Stage();
-            stage.setTitle("Accueil Gestion de Franchises");
+            stage.setTitle("Accueil");
             stage.setScene(new Scene(root));
 
             // Configurer la fenêtre en tant que modal

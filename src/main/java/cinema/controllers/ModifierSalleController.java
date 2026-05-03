@@ -25,7 +25,7 @@ import javafx.stage.Stage;
 public class ModifierSalleController extends MenuController implements Initializable {
 
     @FXML
-    private TextField tfNumSalle, tfDescSalle, tfNbPlaces;
+    private TextField tfNumSalle, tfDescSalle, tfNbPlaces, tfParticularite;
     @FXML
     private Button bRetour;
     @FXML
@@ -51,6 +51,7 @@ public class ModifierSalleController extends MenuController implements Initializ
         this.idSalle = salle.getIdSalle();
         tfNumSalle.setText(String.valueOf(salle.getNumSalle()));
         tfDescSalle.setText(salle.getDescSalle());
+        tfParticularite.setText(salle.getParticularite() != null ? salle.getParticularite() : "");
         tfNbPlaces.setText(String.valueOf(salle.getNbPlaces()));
         this.idCinemaSelectionne = salle.getIdCinema();
 
@@ -69,6 +70,7 @@ public class ModifierSalleController extends MenuController implements Initializ
         try {
             int numSalle = Integer.parseInt(tfNumSalle.getText());
             String descSalle = tfDescSalle.getText();
+            String particularite = tfParticularite.getText();
             int nbPlaces = Integer.parseInt(tfNbPlaces.getText());
             Cinema selectedCinema = lvCinema.getSelectionModel().getSelectedItem();
 
@@ -76,7 +78,7 @@ public class ModifierSalleController extends MenuController implements Initializ
                 int idNouveauCinema = selectedCinema.getIdCinema();
 
 
-                Salle salleModifiee = new Salle(this.idSalle, numSalle, descSalle, nbPlaces, idNouveauCinema);
+                Salle salleModifiee = new Salle(this.idSalle, numSalle, descSalle, particularite, nbPlaces, idNouveauCinema);
 
                 SalleDAO salleDAO = new SalleDAO();
                 boolean controle = salleDAO.update(salleModifiee);
@@ -125,7 +127,7 @@ public class ModifierSalleController extends MenuController implements Initializ
             listeSalleController.setName(nameUti);
 
             Stage stage = new Stage();
-            stage.setTitle("Liste salles");
+            stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();

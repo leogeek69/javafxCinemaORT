@@ -88,7 +88,8 @@
         <TableView fx:id="tvSalles" layoutY="50.0" prefHeight="292.0" prefWidth="873.0">
             <columns>
                 <TableColumn fx:id="tcNumSalle" prefWidth="100.0" text="N° Salle" />
-                <TableColumn fx:id="tcDescSalle" prefWidth="250.0" text="Description" />
+                <TableColumn fx:id="tcDescSalle" prefWidth="150.0" text="Description" />
+                <TableColumn fx:id="tcParticularite" prefWidth="120.0" text="Particularité" />
                 <TableColumn fx:id="tcNbPlaces" prefWidth="100.0" text="Nb Places" />
                 <TableColumn fx:id="tcCinema" prefWidth="200.0" text="Cinéma" />
                 <TableColumn fx:id="tcModifier" prefWidth="100.0" text="Modifier" />
