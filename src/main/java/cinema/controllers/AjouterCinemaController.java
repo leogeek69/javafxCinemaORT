@@ -106,11 +106,12 @@ public class AjouterCinemaController extends MenuController implements Initializ
         String nomCinema = tfDenominationCinema.getText();
         String adresseCinema = tfAdresseCinema.getText();
         Cinema villeCinema = lvVille.getSelectionModel().getSelectedItem();
+        Franchise franchiseSelect = lvNomFranchise.getSelectionModel().getSelectedItem();
 
         //on vérifie que rien n'est vide et qu'un gérant est bien cliqué
         if (nomCinema == null || nomCinema.isEmpty() ||
                 adresseCinema == null || adresseCinema.isEmpty() ||
-                villeCinema == null) {
+                villeCinema == null || franchiseSelect == null) {
 
             System.out.println("Erreur : Vous devez remplir tous les champs");
 
@@ -118,17 +119,22 @@ public class AjouterCinemaController extends MenuController implements Initializ
         }
 
         //si c'est sélectionné on valides
-        String ville = villeCinema.getDenomination();
-        int idCinema = villeCinema.getIdFranchise();
-        Cinema cinema = new Cinema(0, nomCinema, adresseCinema , ville, idCinema);
+        String ville = villeCinema.getVille();
+        int idFranchise = franchiseSelect.getIdFranchise();
+
+        Cinema cinema = new Cinema(0, nomCinema, adresseCinema, ville, idFranchise);
 
         CinemaDAO cinemaDAO = new CinemaDAO();
         boolean controle = cinemaDAO.create(cinema);
 
         if (controle) {
+            System.out.println("Succes : Le cinema a ete ajoute !");
             tfDenominationCinema.clear();
             tfAdresseCinema.clear();
             lvVille.getSelectionModel().clearSelection();
+            lvNomFranchise.getSelectionModel().clearSelection();
+        } else {
+            System.out.println("Erreur lors de l'insertion en BDD.");
         }
     }
 
