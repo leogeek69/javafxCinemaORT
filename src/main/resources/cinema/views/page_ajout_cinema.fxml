@@ -44,7 +44,7 @@
                                   text="Liste des cinemas"
                                   onAction="#bListeCinemaClick" />
                         <MenuItem fx:id="bAjouterCinema"
-                                  text="Ajouter une cinema"
+                                  text="Ajouter un cinema"
                                   onAction="#bAjouterCinemaClick" />
                     </items>
                 </Menu>
