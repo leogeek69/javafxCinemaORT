@@ -104,6 +104,8 @@ public class ModifierCinemaController extends MenuController implements Initiali
             stage.setTitle("Accueil Gestion de Franchisess");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.show();
@@ -142,6 +144,8 @@ public class ModifierCinemaController extends MenuController implements Initiali
                         stage.setTitle("Liste franchises");
                         stage.setScene(new Scene(root));
 
+                        setIcone(stage);
+
                         stage.initModality(Modality.APPLICATION_MODAL);
 
                         stage.show();
@@ -161,6 +165,8 @@ public class ModifierCinemaController extends MenuController implements Initiali
                     Stage stage = new Stage();
                     stage.setTitle("Pop-up");
                     stage.setScene(new Scene(root));
+
+                    setIcone(stage);
 
                     // Configurer la fenêtre en tant que modal
                     stage.initModality(Modality.APPLICATION_MODAL);

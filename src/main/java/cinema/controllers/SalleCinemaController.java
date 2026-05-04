@@ -55,6 +55,9 @@ public class SalleCinemaController extends MenuController implements Initializab
             Stage stage = new Stage();
             stage.setTitle("Liste cinemas");
             stage.setScene(new Scene(root));
+
+            setIcone(stage);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
         } catch (Exception e) {

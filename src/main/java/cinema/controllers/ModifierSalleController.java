@@ -98,6 +98,9 @@ public class ModifierSalleController extends MenuController implements Initializ
                         Stage stage = new Stage();
                         stage.setTitle("Liste salles");
                         stage.setScene(new Scene(root));
+
+                        setIcone(stage);
+
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.show();
 
@@ -129,6 +132,9 @@ public class ModifierSalleController extends MenuController implements Initializ
             Stage stage = new Stage();
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
+
+            setIcone(stage);
+
             stage.initModality(Modality.APPLICATION_MODAL);
             stage.show();
 
