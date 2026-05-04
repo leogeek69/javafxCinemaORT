@@ -19,11 +19,11 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class ConnexionController implements Initializable {
-    private int compteur =0;
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+    // gere le nombre de tentatives echouees
+    private int compteur = 0;
 
-    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {}
 
     @FXML
     private TextField tfLogin;
@@ -34,88 +34,66 @@ public class ConnexionController implements Initializable {
 
     @FXML
     public void bConnexionClick(ActionEvent event) {
+        // recupere les identifiants
         String login = tfLogin.getText();
         String mdp = tfMDP.getText();
 
+        // verifie en bdd avec gestion du hash bcrypt
         UtilisateurDAO userDAO = new UtilisateurDAO();
         Utilisateur user = userDAO.authenticate(login, mdp);
 
+        // aiguillage selon le resultat
         if (user != null) {
             compteur = 0;
             String nomComplet = user.getPrenom() + " " + user.getNom();
-
-            // On envoie ce nom complet à l'accueil
             showAccueil(nomComplet);
         } else {
-            compteur = compteur + 1;
+            compteur++;
             showError();
         }
     }
 
     private void showAccueil(String name) {
+        // demarre la session en ouvrant la vue principale
         Stage stageP = (Stage) bConnexion.getScene().getWindow();
-        // on ferme l'écran
         stageP.close();
         try {
-
-            // Charger le fichier FXML pour la pop-up
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_accueil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_accueil.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Obtenir le contrôleur de la nouvelle fenetre
             AccueilController accueilController = fxmlLoader.getController();
             accueilController.setName(name);
             accueilController.setBienvenue();
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Accueil Gestion de franchises");
             stage.setScene(new Scene(root));
             stage.getIcons().add(new Image("/cinema/images/cinema_32x32.png"));
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
     private void showError() {
-
+        // affiche une popup non bloquante avec le compteur d'erreur
         try {
-            // Charger le fichier FXML pour la pop-up
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/ErreurConnexion.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/ErreurConnexion.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Obtenir le contrôleur de la pop-up
             ErrorController errorController = fxmlLoader.getController();
-
-            // Passer la variable au contrôleur de la pop-up
             errorController.setMajLabel(Integer.toString(compteur));
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
-            stage.setTitle("Error Window");
+            stage.setTitle("Erreur de connexion");
             stage.setScene(new Scene(root));
-
             stage.getIcons().add(new Image("/cinema/images/cinema_32x32.png"));
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.showAndWait();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }

@@ -30,28 +30,20 @@ public class ListeSalleController extends MenuController implements Initializabl
 
     @FXML
     private TableView<Salle> tvSalles;
-
     @FXML
     private TableColumn<Salle, Integer> tcNumSalle;
-
     @FXML
     private TableColumn<Salle, String> tcDescSalle;
-
     @FXML
     private TableColumn<Salle, String> tcParticularite;
-
     @FXML
     private TableColumn<Salle, Integer> tcNbPlaces;
-
     @FXML
     private TableColumn<Salle, String> tcCinema;
-
     @FXML
     private TableColumn<Salle, Void> tcModifier;
-
     @FXML
     private TableColumn<Salle, Void> tcSupprimer;
-
     @FXML
     private Button bRetour;
 
@@ -59,19 +51,18 @@ public class ListeSalleController extends MenuController implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         CinemaDAO cinemaDAO = new CinemaDAO();
 
-
+        // pre-charge tous les cinemas pour resoudre les id plus rapidement
         Map<Integer, Cinema> cinemas = cinemaDAO.findAll()
                 .stream()
                 .collect(Collectors.toMap(Cinema::getIdCinema, c -> c));
 
-
+        // resolution de l'id cinema en nom string
         tcCinema.setCellValueFactory(cellData -> {
             Cinema cinema = cinemas.get(cellData.getValue().getIdCinema());
-
-            return new SimpleStringProperty(
-                    cinema != null ? cinema.getDenomination() : "Aucun cinéma");
+            return new SimpleStringProperty(cinema != null ? cinema.getDenomination() : "Aucun cinéma");
         });
 
+        // affectation standard des donnees de salle
         tcNumSalle.setCellValueFactory(new PropertyValueFactory<>("numSalle"));
         tcDescSalle.setCellValueFactory(new PropertyValueFactory<>("descSalle"));
         tcParticularite.setCellValueFactory(new PropertyValueFactory<>("particularite"));
@@ -85,9 +76,9 @@ public class ListeSalleController extends MenuController implements Initializabl
     }
 
     private ObservableList<Salle> getSalleList() {
+        // charge les donnees brutes depuis la bdd
         SalleDAO salleDAO = new SalleDAO();
         List<Salle> listeSalles = salleDAO.findAll();
-
         ObservableList<Salle> list = FXCollections.observableArrayList();
         if (listeSalles != null) {
             list.addAll(listeSalles);
@@ -97,29 +88,23 @@ public class ListeSalleController extends MenuController implements Initializabl
 
     @FXML
     private void bRetourClick() {
+        // retour global
         Stage stageP = (Stage) bRetour.getScene().getWindow();
         stageP.close();
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_accueil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_accueil.fxml"));
             Parent root = fxmlLoader.load();
 
             AccueilController accueilController = fxmlLoader.getController();
             accueilController.setName(nameUti);
             accueilController.setBienvenue();
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,6 +112,7 @@ public class ListeSalleController extends MenuController implements Initializabl
     }
 
     private void addButtonModifierToTable() {
+        // generation dynamique du bouton pour modifier une ligne precise
         tcModifier.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Modifier");
             {
@@ -136,10 +122,8 @@ public class ListeSalleController extends MenuController implements Initializabl
                     stageP.close();
 
                     try {
-                        FXMLLoader fxmlLoader = new FXMLLoader(
-                                getClass().getResource("/cinema/views/page_modif_salle.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_modif_salle.fxml"));
                         Parent root = fxmlLoader.load();
-
 
                         ModifierSalleController modifierSalleCtrl = fxmlLoader.getController();
                         modifierSalleCtrl.setAttributes(salle);
@@ -148,11 +132,8 @@ public class ListeSalleController extends MenuController implements Initializabl
                         Stage stage = new Stage();
                         stage.setTitle("Modification salle");
                         stage.setScene(new Scene(root));
-
                         setIcone(stage);
-
                         stage.initModality(Modality.APPLICATION_MODAL);
-
                         stage.show();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -169,15 +150,13 @@ public class ListeSalleController extends MenuController implements Initializabl
     }
 
     private void addButtonSupprimerToTable() {
+        // generation dynamique de l'action delete par ligne
         tcSupprimer.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Supprimer");
-
             {
                 btn.setOnAction(event -> {
                     Salle salle = getTableView().getItems().get(getIndex());
-                    // Suppression de la vue
                     tvSalles.getItems().remove(salle);
-                    // Suppression en bdd
                     SalleDAO salleDAO = new SalleDAO();
                     salleDAO.delete(salle);
                 });
