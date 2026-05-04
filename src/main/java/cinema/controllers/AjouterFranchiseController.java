@@ -33,93 +33,72 @@ public class AjouterFranchiseController extends MenuController implements Initia
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        // charge la liste des gerants au lancement de la vue
         ObservableList<Utilisateur> utilisateurs = getUtilisateurList();
-
         lvGerantFranchise.setItems(utilisateurs);
     }
 
     private ObservableList<Utilisateur> getUtilisateurList() {
-
+        // recupere tous les utilisateurs pour le choix du gerant
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
         List<Utilisateur> utilisateurs = utilisateurDAO.findAll();
-
-        ObservableList<Utilisateur> list = FXCollections.observableArrayList(utilisateurs);
-        return list;
+        return FXCollections.observableArrayList(utilisateurs);
     }
 
     @FXML
     public void bRetourClick(ActionEvent event) {
-        // On fait le lien avec l'ecran actuel
+        // gestion de l'annulation et retour au menu principal
         Stage stageP = (Stage) bRetour.getScene().getWindow();
-        // on ferme l'écran
         stageP.close();
 
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_accueil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_accueil.fxml"));
             Parent root = fxmlLoader.load();
 
             AccueilController accueilController = fxmlLoader.getController();
             accueilController.setName(nameUti);
             accueilController.setBienvenue();
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
     public void bEnregistrerClick(ActionEvent event) {
-
+        // collecte des donnees du formulaire
         String nomFranchise = tfNomFranchise.getText();
         String siegeSocial = tfSiegeSocial.getText();
         Utilisateur gerantSelect = lvGerantFranchise.getSelectionModel().getSelectedItem();
 
-        //on vérifie que rien n'est vide et qu'un gérant est bien cliqué
-        if (nomFranchise == null || nomFranchise.isEmpty() ||
-                siegeSocial == null || siegeSocial.isEmpty() ||
-                gerantSelect == null) {
-
-        System.out.println("Erreur : Vous devez remplir tous les champs");
-
+        // controle de saisie stricte
+        if (nomFranchise == null || nomFranchise.isEmpty() || siegeSocial == null || siegeSocial.isEmpty() || gerantSelect == null) {
             return;
         }
 
-        //si c'est sélectionné on valides
+        // affectation et envoi a la couche de donnees
         int id = gerantSelect.getIdUtilisateur();
         Franchise franchise = new Franchise(0, nomFranchise, siegeSocial, id);
-
         FranchiseDAO franchiseDAO = new FranchiseDAO();
         boolean controle = franchiseDAO.create(franchise);
 
+        // purge des champs en cas de succes
         if (controle) {
-            tfNomFranchise.clear();
-            tfSiegeSocial.clear();
-            lvGerantFranchise.getSelectionModel().clearSelection();
+            bEffacerClick(null);
         }
     }
 
     @FXML
     public void bEffacerClick(ActionEvent event) {
-        if (tfNomFranchise != null)
-            tfNomFranchise.clear();
-        if (tfSiegeSocial != null)
-            tfSiegeSocial.clear();
+        // utilitaire de nettoyage du formulaire
+        if (tfNomFranchise != null) tfNomFranchise.clear();
+        if (tfSiegeSocial != null) tfSiegeSocial.clear();
         lvGerantFranchise.getSelectionModel().clearSelection();
     }
-
 }
