@@ -32,7 +32,7 @@ public class ListeCinemaController extends MenuController implements Initializab
     private TableColumn<Cinema, String> tcDenomination, tcFranchise;
 
     @FXML
-    private TableColumn<Cinema, Void> tcModif, tcSupp;
+    private TableColumn<Cinema, Void> tcModif, tcSupp, tcVp;
 
     @FXML
     private Button bRetour;
@@ -45,6 +45,7 @@ public class ListeCinemaController extends MenuController implements Initializab
         tcFranchise.setCellValueFactory(new PropertyValueFactory<>("nomFranchise"));
 
         //ajout boutons
+        btnVoirPlus();
         btnModif();
         btnSupp();
 
@@ -87,6 +88,43 @@ public class ListeCinemaController extends MenuController implements Initializab
             e.printStackTrace();
         }
     }
+
+    private void btnVoirPlus() {
+        tcVp.setCellFactory(column -> new TableCell<Cinema, Void>() {
+            private Button btn = new Button("Voir Plus");
+            {
+                btn.setOnAction(event -> {
+                    Cinema cinema = getTableView().getItems().get(getIndex());
+                    Stage stageP = (Stage) bRetour.getScene().getWindow();
+                    stageP.close();
+                    try {
+                        FXMLLoader fxmlLoader = new FXMLLoader(
+                                getClass().getResource("/cinema/views/page_salles_cinema.fxml"));
+                        Parent root = fxmlLoader.load();
+
+                        SalleCinemaController salleCtrl = fxmlLoader.getController();
+                        salleCtrl.setCinema(cinema);
+                        salleCtrl.setName(nameUti);
+
+                        Stage stage = new Stage();
+                        stage.setTitle("Salles du cinema");
+                        stage.setScene(new Scene(root));
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : btn);
+            }
+        });
+    }
+
 
     private void btnModif() {
         tcModif.setCellFactory(column -> new TableCell<Cinema, Void>() {
