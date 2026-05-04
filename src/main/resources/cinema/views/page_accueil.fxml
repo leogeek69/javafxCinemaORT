@@ -122,5 +122,6 @@
                 <Image url="@../images/cinema_logo.png" />
             </image>
         </ImageView>
+
     </children>
 </Pane>

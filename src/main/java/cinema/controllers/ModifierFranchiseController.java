@@ -90,6 +90,8 @@ public class ModifierFranchiseController extends MenuController implements Initi
                     stage.setTitle("Liste franchises");
                     stage.setScene(new Scene(root));
 
+                    setIcone(stage);
+
                     // Configurer la fenêtre en tant que modal
                     stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -111,6 +113,8 @@ public class ModifierFranchiseController extends MenuController implements Initi
                 Stage stage = new Stage();
                 stage.setTitle("Pop-up");
                 stage.setScene(new Scene(root));
+
+                setIcone(stage);
 
                 // Configurer la fenêtre en tant que modal
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -144,6 +148,8 @@ public class ModifierFranchiseController extends MenuController implements Initi
             Stage stage = new Stage();
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
+
+            setIcone(stage);
 
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);

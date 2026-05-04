@@ -122,5 +122,14 @@
                 </StackPane>
             </children>
         </VBox>
+
+        <ImageView fitHeight="60.0" fitWidth="60.0" preserveRatio="true">
+            <image>
+                <Image url="@../images/cinema_logo.png" />
+            </image>
+            <HBox.margin>
+                <Insets right="40.0"/>
+            </HBox.margin>
+        </ImageView>
     </children>
 </Pane>

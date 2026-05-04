@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.image.Image;
 
 public class MenuController {
 
@@ -41,6 +42,8 @@ public class MenuController {
             stage.setTitle("Accueil");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -69,6 +72,8 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("Liste franchises");
             stage.setScene(new Scene(root));
+
+            setIcone(stage);
 
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -99,6 +104,8 @@ public class MenuController {
             stage.setTitle("Ajouter une franchise");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -127,6 +134,8 @@ public class MenuController {
             stage.setTitle("Liste cinéma");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             stage.initModality(Modality.APPLICATION_MODAL);
 
             stage.show();
@@ -153,6 +162,8 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("Ajout d'un Cinéma");
             stage.setScene(new Scene(root));
+
+             setIcone(stage);
 
             stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -184,6 +195,8 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("Liste salles");
             stage.setScene(new Scene(root));
+
+            setIcone(stage);
 
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
@@ -221,6 +234,8 @@ public class MenuController {
             stage.setTitle("Ajout d'une salle");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -231,4 +246,13 @@ public class MenuController {
             e.printStackTrace();
         }
     }
+
+    protected void setIcone(Stage stage) {
+        try {
+            stage.getIcons().add(new Image(getClass().getResourceAsStream("/cinema/images/cinema_32x32.png")));
+        } catch (Exception e) {
+            System.out.println("Erreur lors du chargement de l'icône : " + e.getMessage());
+        }
+    }
+
 }

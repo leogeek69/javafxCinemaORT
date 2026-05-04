@@ -89,6 +89,8 @@ public class AjouterCinemaController extends MenuController implements Initializ
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
 

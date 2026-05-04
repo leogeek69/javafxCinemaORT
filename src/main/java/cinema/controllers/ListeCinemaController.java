@@ -79,6 +79,8 @@ public class ListeCinemaController extends MenuController implements Initializab
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -109,6 +111,9 @@ public class ListeCinemaController extends MenuController implements Initializab
                         Stage stage = new Stage();
                         stage.setTitle("Salles du cinema");
                         stage.setScene(new Scene(root));
+
+                        setIcone(stage);
+
                         stage.initModality(Modality.APPLICATION_MODAL);
                         stage.show();
                     } catch (Exception e) {
@@ -148,6 +153,8 @@ public class ListeCinemaController extends MenuController implements Initializab
                         stage.setTitle("Modification cinema");
                         stage.setScene(new Scene(root));
 
+                        setIcone(stage);
+
                         stage.initModality(Modality.APPLICATION_MODAL);
 
                         stage.show();
@@ -183,6 +190,8 @@ public class ListeCinemaController extends MenuController implements Initializab
                             Stage stage = new Stage();
                             stage.setTitle("Pop-up");
                             stage.setScene(new Scene(root));
+
+                            setIcone(stage);
 
                             // Configurer la fenêtre en tant que modal
                             stage.initModality(Modality.APPLICATION_MODAL);
