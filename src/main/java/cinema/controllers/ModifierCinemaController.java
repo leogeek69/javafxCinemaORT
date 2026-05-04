@@ -118,7 +118,6 @@ public class ModifierCinemaController extends MenuController implements Initiali
             String nomCinema = tfNomCinema.getText();
             String adresseCinema = tfAdresseCinema.getText();
             String ville = lvVille.getSelectionModel().getSelectedItem();
-            //Franchise idFranchise = parseInteger(lvNomFranchise.getSelectionModel().getSelectedItem());
             String nomSelectionne = lvNomFranchise.getSelectionModel().getSelectedItem();
             FranchiseDAO franchiseDAO = new FranchiseDAO();
             Franchise franchise = franchiseDAO.findByNom(nomSelectionne);
