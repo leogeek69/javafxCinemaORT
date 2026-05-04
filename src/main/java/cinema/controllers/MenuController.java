@@ -12,26 +12,25 @@ import javafx.stage.Stage;
 import javafx.scene.image.Image;
 
 public class MenuController {
-
+    // gere les references communes a toute la navigation
     @FXML
-    protected MenuItem bListeFranchise, bAjouterFranchise, bListeCinema, bAjouterCinema, bQuitter, bAccueil,
-            bListeSalle,
-            bAjouterSalle;
+    protected MenuItem bListeFranchise, bAjouterFranchise, bListeCinema, bAjouterCinema, bQuitter, bAccueil, bListeSalle, bAjouterSalle;
 
     protected String nameUti;
 
     @FXML
     public void bQuitterClick(ActionEvent event) {
+        // stoppe brutalement la boucle javafx
         Platform.exit();
     }
 
     @FXML
     public void bAccueilClick(ActionEvent event) {
+        // gere le retour a l'accueil depuis la barre superieure
         Stage StageE = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
         StageE.close();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_accueil.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_accueil.fxml"));
             Parent root = fxmlLoader.load();
 
             AccueilController accueilController = fxmlLoader.getController();
@@ -41,12 +40,8 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("Accueil");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
             stage.show();
         } catch (Exception e){
             e.printStackTrace();
@@ -55,32 +50,22 @@ public class MenuController {
 
     @FXML
     public void bListFranchiseClick(ActionEvent event) {
+        // charge la vue franchises
         Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
         stageP.close();
         try {
-
-            // Charger le fichier FXML
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_liste_franchise.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_liste_franchise.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Obtenir le contrôleur de la nouvelle fenetre
             ListeFranchiseController listeFranchiseController = fxmlLoader.getController();
             listeFranchiseController.setName(nameUti);
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Liste franchises");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -88,43 +73,34 @@ public class MenuController {
 
     @FXML
     public void bAjouterFranchiseClick(ActionEvent event) {
+        // charge le formulaire de creation
         Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
         stageP.close();
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_ajout_franchise.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_ajout_franchise.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Obtenir le contrôleur de la nouvelle fenetre
             AjouterFranchiseController ajouterFranchiseController = fxmlLoader.getController();
             ajouterFranchiseController.setName(nameUti);
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Ajouter une franchise");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     @FXML
     public void bListeCinemaClick(ActionEvent event) {
+        // charge la vue tabulaire cinemas
         Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
         stageP.close();
         try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
             Parent root = fxmlLoader.load();
 
             ListeCinemaController listeSectionController = fxmlLoader.getController();
@@ -133,13 +109,9 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("Liste cinéma");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
             stage.initModality(Modality.APPLICATION_MODAL);
-
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,14 +119,13 @@ public class MenuController {
 
     @FXML
     public void bAjouterCinemaClick(ActionEvent event) {
-         try {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_ajout_cinema.fxml"));
+        // charge le formulaire cinema
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_ajout_cinema.fxml"));
             Parent root = fxmlLoader.load();
 
-             AjouterCinemaController ajouterCinemaController = fxmlLoader.getController();
-             ajouterCinemaController.setName(nameUti);
+            AjouterCinemaController ajouterCinemaController = fxmlLoader.getController();
+            ajouterCinemaController.setName(nameUti);
 
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
             stageP.close();
@@ -162,13 +133,9 @@ public class MenuController {
             Stage stage = new Stage();
             stage.setTitle("Ajout d'un Cinéma");
             stage.setScene(new Scene(root));
-
-             setIcone(stage);
-
+            setIcone(stage);
             stage.initModality(Modality.APPLICATION_MODAL);
-
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,51 +143,38 @@ public class MenuController {
 
     @FXML
     public void bListeSalleClick(ActionEvent event) {
-
+        // charge la vue tabulaire salles
         try {
-
-            // Charger le fichier FXML
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_liste_salle.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_liste_salle.fxml"));
             Parent root = fxmlLoader.load();
 
-            // Charger controller pour faire passer le nameUti
             ListeSalleController listeSalleController = fxmlLoader.getController();
             listeSalleController.setName(nameUti);
 
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
             stageP.close();
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Liste salles");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     public void setName(String nameUti) {
+        // maintient le nom utilisateur entre les pages
         this.nameUti = nameUti;
     }
 
     @FXML
     public void bAjouterSalleClick(ActionEvent event) {
-
+        // charge le formulaire de salle
         try {
-
-            // Charger le fichier FXML
-            FXMLLoader fxmlLoader = new FXMLLoader(
-                    getClass().getResource("/cinema/views/page_ajout_salle.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_ajout_salle.fxml"));
             Parent root = fxmlLoader.load();
 
             Stage stageP = (Stage) ((MenuItem) event.getSource()).getParentPopup().getOwnerWindow();
@@ -229,30 +183,23 @@ public class MenuController {
             AjouterSalleController ajouterSalleController = fxmlLoader.getController();
             ajouterSalleController.setName(nameUti);
 
-            // Créer une nouvelle fenêtre (Stage)
             Stage stage = new Stage();
             stage.setTitle("Ajout d'une salle");
             stage.setScene(new Scene(root));
-
             setIcone(stage);
-
-            // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
-
-            // Afficher la fenêtre et attendre qu'elle se ferme
             stage.show();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     protected void setIcone(Stage stage) {
+        // utilitaire partagé pour imposer le branding fenetre
         try {
             stage.getIcons().add(new Image(getClass().getResourceAsStream("/cinema/images/cinema_32x32.png")));
         } catch (Exception e) {
-            System.out.println("Erreur lors du chargement de l'icône : " + e.getMessage());
+            System.out.println("Erreur icône : " + e.getMessage());
         }
     }
-
 }
