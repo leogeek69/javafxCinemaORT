@@ -33,12 +33,13 @@ CREATE TABLE cinema (
 -- Création de la table salle
 -- La colonne id_cinema sert de clé étrangère pour lier la salle à un cinéma
 CREATE TABLE salle (
-   id_salle SERIAL PRIMARY KEY,
-   numero INTEGER NOT NULL,
-   description VARCHAR(255),
-   nb_places INTEGER NOT NULL,
-   id_cinema INTEGER NOT NULL,
-   CONSTRAINT fk_cinema FOREIGN KEY(id_cinema) REFERENCES cinema(id_cinema) ON DELETE CASCADE
+                       id_salle SERIAL PRIMARY KEY,
+                       numero INTEGER NOT NULL,
+                       description VARCHAR(255),
+                       particularité VARCHAR(255),
+                       nb_places INTEGER NOT NULL,
+                       id_cinema INTEGER NOT NULL,
+                       CONSTRAINT fk_cinema FOREIGN KEY(id_cinema) REFERENCES cinema(id_cinema) ON DELETE CASCADE
 );
 
 -- Index pour optimiser les recherches

@@ -57,15 +57,15 @@ VALUES
 -- 4. Insertion des Salles
 -- On crée plusieurs salles pour chaque cinéma
 INSERT INTO
-	salle (numero, description, nb_places, id_cinema)
+    salle (numero, description, particularité, nb_places, id_cinema)
 VALUES
-	-- Salles pour CinéMax Étoile (ID 1)
-	(1, 'Salle Prestige', 150, 1),
-	(2, 'Salle 2', 80, 1),
-	(3, 'Salle 3', 80, 1),
-	-- Salles pour CinéMax Rivoli (ID 2)
-	(4, 'Grande Salle', 300, 2),
-	(5, 'Petite Salle', 50, 2),
-	-- Salles pour Le Grand Écran (ID 3)
-	(6, 'Salle IMAX', 450, 3),
-	(7, 'Salle Horizon', 120, 3);
+    -- Salles pour CinéMax Étoile (ID 1)
+    (1, 'Salle Prestige','', 150, 1),
+    (2, 'Salle 2','Dolby ATMOS', 80, 1),
+    (3, 'Salle 3', '', 80, 1),
+    -- Salles pour CinéMax Rivoli (ID 2)
+    (4, 'Grande Salle', '', 300, 2),
+    (5, 'Petite Salle', '3D', 50, 2),
+    -- Salles pour Le Grand Écran (ID 3)
+    (6, 'Salle IMAX', '', 450, 3),
+    (7, 'Salle Horizon', '', 120, 3);
