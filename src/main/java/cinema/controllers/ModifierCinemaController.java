@@ -18,6 +18,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -79,6 +80,7 @@ public class ModifierCinemaController extends MenuController implements Initiali
     }
 
     public void setAttributes(Cinema cinema) {
+        this.idCin = cinema.getIdCinema();
         tfNomCinema.setText(cinema.getDenomination());
         tfAdresseCinema.setText(cinema.getAdresse());
         lvVille.getSelectionModel().select(cinema.getVille());
@@ -111,57 +113,63 @@ public class ModifierCinemaController extends MenuController implements Initiali
         }
     }
 
-    @FXML
-    private void bEnregistrerClick(ActionEvent event) {
-        String lib = taLibSec.getText();
-        if (!lib.trim().isEmpty()) {
-            Cinema sec = new Cinema(idCin, lib, lib, lib, idCin);
-            CinemaDAO cinemaDAO = new CinemaDAO();
-            boolean controle = cinemaDAO.update(sec);
-            if (controle) {
-                Stage stageP = (Stage) bRetour.getScene().getWindow();
-                stageP.close();
-                try {
+        @FXML
+        private void bEnregistrerClick(ActionEvent event) {
+            String nomCinema = tfNomCinema.getText();
+            String adresseCinema = tfAdresseCinema.getText();
+            String ville = lvVille.getSelectionModel().getSelectedItem();
+            String nomSelectionne = lvNomFranchise.getSelectionModel().getSelectedItem();
+            FranchiseDAO franchiseDAO = new FranchiseDAO();
+            Franchise franchise = franchiseDAO.findByNom(nomSelectionne);
+            int idFranchise = franchise.getIdFranchise();
+            if (nomCinema != null && adresseCinema != null && ville != null && franchise != null) {
+                Cinema sec = new Cinema(idCin, nomCinema, adresseCinema, ville, idFranchise);
+                CinemaDAO cinemaDAO = new CinemaDAO();
+                boolean controle = cinemaDAO.update(sec);
+                if (controle) {
+                    Stage stageP = (Stage) bRetour.getScene().getWindow();
+                    stageP.close();
+                    try {
 
+                        FXMLLoader fxmlLoader = new FXMLLoader(
+                                getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
+                        Parent root = fxmlLoader.load();
+
+                        ListeCinemaController listeCinemaController = fxmlLoader.getController();
+                        listeCinemaController.setName(nameUti);
+
+                        Stage stage = new Stage();
+                        stage.setTitle("Liste franchises");
+                        stage.setScene(new Scene(root));
+
+                        stage.initModality(Modality.APPLICATION_MODAL);
+
+                        stage.show();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } else {
+                try {
+                    // Charger le fichier FXML
                     FXMLLoader fxmlLoader = new FXMLLoader(
-                            getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
+                            getClass().getResource("/cinema/views/popup_ajout_etu.fxml"));
                     Parent root = fxmlLoader.load();
 
-                    ListeCinemaController listeCinemaController = fxmlLoader.getController();
-                    listeCinemaController.setName(nameUti);
-
+                    // Créer une nouvelle fenêtre (Stage)
                     Stage stage = new Stage();
-                    stage.setTitle("Liste franchises");
+                    stage.setTitle("Pop-up");
                     stage.setScene(new Scene(root));
 
+                    // Configurer la fenêtre en tant que modal
                     stage.initModality(Modality.APPLICATION_MODAL);
 
+                    // Afficher la fenêtre et attendre qu'elle se ferme
                     stage.show();
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }
-        } else {
-            try {
-                // Charger le fichier FXML
-                FXMLLoader fxmlLoader = new FXMLLoader(
-                        getClass().getResource("/cinema/views/popup_ajout_etu.fxml"));
-                Parent root = fxmlLoader.load();
-
-                // Créer une nouvelle fenêtre (Stage)
-                Stage stage = new Stage();
-                stage.setTitle("Pop-up");
-                stage.setScene(new Scene(root));
-
-                // Configurer la fenêtre en tant que modal
-                stage.initModality(Modality.APPLICATION_MODAL);
-
-                // Afficher la fenêtre et attendre qu'elle se ferme
-                stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         }
     }
 }
