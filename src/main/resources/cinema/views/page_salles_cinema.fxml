@@ -128,6 +128,25 @@
             </children>
         </HBox>
 
+        <HBox alignment="CENTER"
+              layoutY="320.0"
+              prefHeight="80.0"
+              prefWidth="729.0">
+            <children>
+                <Button fx:id="bRetour"
+                        mnemonicParsing="false"
+                        onAction="#bRetourClick"
+                        prefHeight="39.0"
+                        prefWidth="200.0"
+                        text="RETOUR"
+                        textFill="#024010">
+                    <font>
+                        <Font name="System Bold" size="18.0" />
+                    </font>
+                </Button>
+            </children>
+        </HBox>
+
 
         <!-- Courbe verte en bas des boutons -->
         <Pane layoutX="0.0" layoutY="440.0" prefHeight="30.0" prefWidth="729.0">
