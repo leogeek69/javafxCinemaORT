@@ -27,7 +27,7 @@ CREATE TABLE cinema (
    adresse TEXT,
    ville VARCHAR(100),
    id_franchise INTEGER NOT NULL,
-   CONSTRAINT fk_franchise_cinema FOREIGN KEY(id_franchise) REFERENCES franchise(id_franchise) ON DELETE CASCADE
+   CONSTRAINT fk_franchise_cinema FOREIGN KEY(id_franchise) REFERENCES franchise(id_franchise)
 );
 
 -- Création de la table salle
@@ -39,7 +39,7 @@ CREATE TABLE salle (
                        particularité VARCHAR(255),
                        nb_places INTEGER NOT NULL,
                        id_cinema INTEGER NOT NULL,
-                       CONSTRAINT fk_cinema FOREIGN KEY(id_cinema) REFERENCES cinema(id_cinema) ON DELETE CASCADE
+                       CONSTRAINT fk_cinema FOREIGN KEY(id_cinema) REFERENCES cinema(id_cinema)
 );
 
 -- Index pour optimiser les recherches

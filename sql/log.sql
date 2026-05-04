@@ -6,7 +6,7 @@ CREATE TABLE log(
                     dateAction TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     ancienContenu TEXT,
                     nouveauContenu TEXT,
-                    utilisateur VARCHAR(100) -- NOUVEAU : colonne utilisateur ajoutée
+                    utilisateur VARCHAR(100)
 );
 
 -- FONCTION (MODIFIEE : ajout de current_user dans l'INSERT)
@@ -23,8 +23,6 @@ END;
 $$;
 
 -- TOUT CE QUI SUIT EST NOUVEAU (triggers cinema et franchise)
--- Les triggers section, cours, etudiant restent inchangés
-
 -- CINEMA
 -- INSERT
 CREATE OR REPLACE FUNCTION trigger_cinema_create() RETURNS TRIGGER AS $$
