@@ -114,6 +114,8 @@ public class ListeSalleController extends MenuController implements Initializabl
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
 
+            setIcone(stage);
+
             // Configurer la fenêtre en tant que modal
             stage.initModality(Modality.APPLICATION_MODAL);
 
@@ -146,6 +148,9 @@ public class ListeSalleController extends MenuController implements Initializabl
                         Stage stage = new Stage();
                         stage.setTitle("Modification salle");
                         stage.setScene(new Scene(root));
+
+                        setIcone(stage);
+
                         stage.initModality(Modality.APPLICATION_MODAL);
 
                         stage.show();
