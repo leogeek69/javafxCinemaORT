@@ -75,7 +75,6 @@ public class ModifierFranchiseController extends MenuController implements Initi
                 stageP.close();
 
                 try {
-
                     // Charger le fichier FXML
                     FXMLLoader fxmlLoader = new FXMLLoader(
                             getClass().getResource("/cinema/views/page_liste_franchise.fxml"));
@@ -101,30 +100,12 @@ public class ModifierFranchiseController extends MenuController implements Initi
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            } else {
+                afficherPopUpErreur("Erreur BDD", "Impossible de mettre à jour la franchise en base de données.");
             }
         } else {
-            try {
-                // Charger le fichier FXML
-                FXMLLoader fxmlLoader = new FXMLLoader(
-                        getClass().getResource("/cinema/views/popup_ajout_etu.fxml"));
-                Parent root = fxmlLoader.load();
-
-                // Créer une nouvelle fenêtre (Stage)
-                Stage stage = new Stage();
-                stage.setTitle("Pop-up");
-                stage.setScene(new Scene(root));
-
-                setIcone(stage);
-
-                // Configurer la fenêtre en tant que modal
-                stage.initModality(Modality.APPLICATION_MODAL);
-
-                // Afficher la fenêtre et attendre qu'elle se ferme
-                stage.show();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
+            // Utilisation de notre méthode générique au lieu de l'ancien FXML codé en dur
+            afficherPopUpErreur("Champs incomplets", "Veuillez remplir tous les champs et sélectionner un gérant valide.");
         }
     }
 

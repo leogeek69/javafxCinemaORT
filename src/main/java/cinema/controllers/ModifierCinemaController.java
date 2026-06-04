@@ -1,4 +1,3 @@
-// ModifierCinemaController.java
 package cinema.controllers;
 
 import cinema.BO.Cinema;
@@ -35,7 +34,6 @@ public class ModifierCinemaController extends MenuController implements Initiali
     @FXML
     private ListView<String> lvNomFranchise;
 
-
     private int idCin;
 
     @FXML
@@ -43,7 +41,6 @@ public class ModifierCinemaController extends MenuController implements Initiali
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // hydrate les donnees metier pour edition
         CinemaDAO cinemaDAO = new CinemaDAO();
         List<String> villes = cinemaDAO.getVilles();
         lvVille.setItems(FXCollections.observableArrayList(villes));
@@ -54,7 +51,6 @@ public class ModifierCinemaController extends MenuController implements Initiali
     }
 
     public void setIdSec(int idCin) {
-        // utilitaire de passation parametre
         this.idCin = idCin;
     }
 
@@ -71,7 +67,6 @@ public class ModifierCinemaController extends MenuController implements Initiali
     }
 
     public void setAttributes(Cinema cinema) {
-        // remplis le formulaire selon l'objet recu par la table
         this.idCin = cinema.getIdCinema();
         tfNomCinema.setText(cinema.getDenomination());
         tfAdresseCinema.setText(cinema.getAdresse());
@@ -81,7 +76,6 @@ public class ModifierCinemaController extends MenuController implements Initiali
 
     @FXML
     private void bRetourClick(ActionEvent event) {
-        // annule completement la procedure d'edition
         Stage stageP = (Stage) bRetour.getScene().getWindow();
         stageP.close();
         try {
@@ -104,51 +98,38 @@ public class ModifierCinemaController extends MenuController implements Initiali
 
     @FXML
     private void bEnregistrerClick(ActionEvent event) {
-        // collecte du formulaire edite
         String nomCinema = tfNomCinema.getText();
         String adresseCinema = tfAdresseCinema.getText();
         String ville = lvVille.getSelectionModel().getSelectedItem();
         String nomSelectionne = lvNomFranchise.getSelectionModel().getSelectedItem();
 
+        // Utilisation de la nouvelle méthode d'erreur globale
+        if (nomCinema == null || nomCinema.isEmpty() || adresseCinema == null || adresseCinema.isEmpty() || ville == null || nomSelectionne == null) {
+            afficherPopUpErreur("Champs incomplets", "Tous les champs et sélections doivent être renseignés.");
+            return;
+        }
+
         FranchiseDAO franchiseDAO = new FranchiseDAO();
         Franchise franchise = franchiseDAO.findByNom(nomSelectionne);
         int idFranchise = franchise.getIdFranchise();
 
-        // s'assure qu'aucun dommage n'est fait aux valeurs obligatoires
-        if (nomCinema != null && adresseCinema != null && ville != null && franchise != null) {
-            Cinema sec = new Cinema(idCin, nomCinema, adresseCinema, ville, idFranchise);
-            CinemaDAO cinemaDAO = new CinemaDAO();
-            boolean controle = cinemaDAO.update(sec);
+        Cinema sec = new Cinema(idCin, nomCinema, adresseCinema, ville, idFranchise);
+        CinemaDAO cinemaDAO = new CinemaDAO();
+        boolean controle = cinemaDAO.update(sec);
 
-            if (controle) {
-                // si ok on purge la pile et remet la data a jour
-                Stage stageP = (Stage) bRetour.getScene().getWindow();
-                stageP.close();
-                try {
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
-                    Parent root = fxmlLoader.load();
-
-                    ListeCinemaController listeCinemaController = fxmlLoader.getController();
-                    listeCinemaController.setName(nameUti);
-
-                    Stage stage = new Stage();
-                    stage.setTitle("Liste franchises");
-                    stage.setScene(new Scene(root));
-                    setIcone(stage);
-                    stage.initModality(Modality.APPLICATION_MODAL);
-                    stage.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        } else {
-            // declenche avertissement format s'il manque qch
+        if (controle) {
+            Stage stageP = (Stage) bRetour.getScene().getWindow();
+            stageP.close();
             try {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/popup_ajout_etu.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_liste_cinema.fxml"));
                 Parent root = fxmlLoader.load();
 
+
+                ListeCinemaController listeCinemaController = fxmlLoader.getController();
+                listeCinemaController.setName(nameUti);
+
                 Stage stage = new Stage();
-                stage.setTitle("Erreur de saisie");
+                stage.setTitle("Liste franchises");
                 stage.setScene(new Scene(root));
                 setIcone(stage);
                 stage.initModality(Modality.APPLICATION_MODAL);
@@ -156,6 +137,8 @@ public class ModifierCinemaController extends MenuController implements Initiali
             } catch (Exception e) {
                 e.printStackTrace();
             }
+        } else {
+            afficherPopUpErreur("Erreur de modification", "Impossible de mettre à jour le cinéma dans la base de données.");
         }
     }
 }

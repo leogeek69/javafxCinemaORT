@@ -36,7 +36,6 @@ public class AjouterCinemaController extends MenuController implements Initializ
     private ComboBox<String> comboBoxAdresses;
 
     public void initialize(URL location, ResourceBundle resources) {
-        // charge les listes de choix au demarrage
         ObservableList<Cinema> cinemasVille = getVilleCinemaList();
         lvVille.setItems(cinemasVille);
 
@@ -45,14 +44,12 @@ public class AjouterCinemaController extends MenuController implements Initializ
     }
 
     private ObservableList<Cinema> getVilleCinemaList() {
-        // interroge la bdd pour avoir les villes uniques
         CinemaDAO cinemaDAO = new CinemaDAO();
         List<Cinema> cinemas = cinemaDAO.getAllVille();
         return FXCollections.observableArrayList(cinemas);
     }
 
     private ObservableList<Franchise> getNomFranchise() {
-        // interroge la bdd pour avoir les noms des franchises
         FranchiseDAO franchiseDAO = new FranchiseDAO();
         List<Franchise> franchise = franchiseDAO.getNomFranchise();
         return FXCollections.observableArrayList(franchise);
@@ -60,7 +57,6 @@ public class AjouterCinemaController extends MenuController implements Initializ
 
     @FXML
     public void bRetourClick(ActionEvent event) {
-        // ferme la fenetre courante et retourne au menu d'accueil
         Stage stageP = (Stage) bRetour.getScene().getWindow();
         stageP.close();
 
@@ -85,18 +81,29 @@ public class AjouterCinemaController extends MenuController implements Initializ
 
     @FXML
     public void bEnregistrerClick(ActionEvent event) {
-        // recupere les informations du formulaire
         String nomCinema = tfDenominationCinema.getText();
         String adresseCinema = tfAdresseCinema.getText();
         Cinema villeCinema = lvVille.getSelectionModel().getSelectedItem();
         Franchise franchiseSelect = lvNomFranchise.getSelectionModel().getSelectedItem();
 
-        // verifie que tout est correctement saisi et selectionne
-        if (nomCinema == null || nomCinema.isEmpty() || adresseCinema == null || adresseCinema.isEmpty() || villeCinema == null || franchiseSelect == null) {
+        // Gestion précise des pop-ups d'erreur en fonction des champs vides
+        if (nomCinema == null || nomCinema.isEmpty()) {
+            afficherPopUpErreur("Erreur de saisie", "Veuillez renseigner la dénomination du cinéma.");
+            return;
+        }
+        if (adresseCinema == null || adresseCinema.isEmpty()) {
+            afficherPopUpErreur("Erreur de saisie", "Veuillez renseigner l'adresse du cinéma.");
+            return;
+        }
+        if (villeCinema == null) {
+            afficherPopUpErreur("Sélection manquante", "Veuillez sélectionner une ville dans la liste.");
+            return;
+        }
+        if (franchiseSelect == null) {
+            afficherPopUpErreur("Sélection manquante", "Veuillez sélectionner une franchise.");
             return;
         }
 
-        // prepare l'objet et procede a l'insertion bdd
         String ville = villeCinema.getVille();
         int idFranchise = franchiseSelect.getIdFranchise();
         Cinema cinema = new Cinema(0, nomCinema, adresseCinema, ville, idFranchise);
@@ -104,15 +111,15 @@ public class AjouterCinemaController extends MenuController implements Initializ
         CinemaDAO cinemaDAO = new CinemaDAO();
         boolean controle = cinemaDAO.create(cinema);
 
-        // reinitialise le formulaire si l'ajout a reussi
         if (controle) {
             bEffacerClick(null);
+        } else {
+            afficherPopUpErreur("Erreur BDD", "Impossible d'enregistrer le cinéma en base de données.");
         }
     }
 
     @FXML
     public void bEffacerClick(ActionEvent event) {
-        // vide tous les champs textes et deselectionne les listes
         if (tfDenominationCinema != null) tfDenominationCinema.clear();
         tfAdresseCinema.clear();
         lvVille.getSelectionModel().clearSelection();

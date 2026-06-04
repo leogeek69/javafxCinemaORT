@@ -8,8 +8,10 @@ import java.util.stream.Collectors;
 
 import cinema.BO.Franchise;
 import cinema.BO.Utilisateur;
+import cinema.BO.Cinema;
 import cinema.DAO.FranchiseDAO;
 import cinema.DAO.UtilisateurDAO;
+import cinema.DAO.CinemaDAO;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -142,15 +144,45 @@ public class ListeFranchiseController extends MenuController implements Initiali
     }
 
     private void addButtonSupprimerToTable() {
-        // ajoute un bouton de suppression directe
+        // ajoute un bouton de suppression avec sécurités
         tcSupprimer.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Supprimer");
             {
                 btn.setOnAction(event -> {
                     Franchise franchise = getTableView().getItems().get(getIndex());
-                    tvFranchises.getItems().remove(franchise);
-                    FranchiseDAO franchiseDAO = new FranchiseDAO();
-                    franchiseDAO.delete(franchise);
+
+                    // 1. Vérification s'il y a des cinémas liés à cette franchise
+                    CinemaDAO cinemaDAO = new CinemaDAO();
+                    List<Cinema> tousLesCinemas = cinemaDAO.findAll();
+
+                    boolean possedeCinemas = false;
+                    for (Cinema c : tousLesCinemas) {
+                        if (c.getNomFranchise() != null && c.getNomFranchise().equals(franchise.getNomFranchise())) {
+                            possedeCinemas = true;
+                            break;
+                        }
+                    }
+
+                    // 2. Gestion de l'affichage selon le résultat
+                    if (possedeCinemas) {
+                        // Impossible de supprimer : on affiche l'erreur native qu'on a créée
+                        afficherPopUpErreur(
+                                "Action impossible",
+                                "La franchise '" + franchise.getNomFranchise() + "' ne peut pas être supprimée car elle possède encore des cinémas.\n\nVeuillez d'abord supprimer ou réattribuer ses cinémas."
+                        );
+                    } else {
+                        // Autorisé : on demande confirmation
+                        boolean confirmer = afficherPopUpConfirmation(
+                                "Confirmation de suppression",
+                                "Êtes-vous sûr de vouloir supprimer définitivement la franchise '" + franchise.getNomFranchise() + "' ?"
+                        );
+
+                        if (confirmer) {
+                            FranchiseDAO franchiseDAO = new FranchiseDAO();
+                            franchiseDAO.delete(franchise);
+                            tvFranchises.getItems().remove(franchise);
+                        }
+                    }
                 });
             }
 

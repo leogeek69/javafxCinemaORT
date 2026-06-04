@@ -33,50 +33,58 @@ public class AjouterSalleController extends MenuController implements Initializa
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // prepare la liste des cinemas pour l'affectation
         ObservableList<Cinema> listeCinemas = getCinemaList();
         lvCinema.setItems(listeCinemas);
     }
 
     private ObservableList<Cinema> getCinemaList() {
-        // appel bdd pour lister les cinemas disponibles
         CinemaDAO cinemaDAO = new CinemaDAO();
         List<Cinema> cinemas = cinemaDAO.findAll();
         return FXCollections.observableArrayList(cinemas);
     }
 
+
     @FXML
     public void bEnregistrerClick(ActionEvent event) {
         try {
-            // recuperation avec parsing numerique
+            // Vérification globale avant de tenter le parsing numérique
+            if (tfNumSalle.getText().isEmpty() || tfNbPlaces.getText().isEmpty()) {
+                afficherPopUpErreur("Champs manquants", "Le numéro de salle et le nombre de places sont obligatoires.");
+                return;
+            }
+
             int numSalle = Integer.parseInt(tfNumSalle.getText());
             String descSalle = tfDescSalle.getText();
             String particularite = tfParticularite.getText();
             int nbPlaces = Integer.parseInt(tfNbPlaces.getText());
             Cinema cinemaSelectionne = lvCinema.getSelectionModel().getSelectedItem();
 
-            // bloquant si les champs obligatoires manquent
-            if (descSalle == null || descSalle.isEmpty() || cinemaSelectionne == null) {
+            if (descSalle == null || descSalle.isEmpty()) {
+                afficherPopUpErreur("Erreur de saisie", "La description de la salle est obligatoire.");
+                return;
+            }
+            if (cinemaSelectionne == null) {
+                afficherPopUpErreur("Sélection manquante", "Veuillez attribuer cette salle à un cinéma.");
                 return;
             }
 
-            // instanciation et requete d'ajout
             Salle nouvelleSalle = new Salle(0, numSalle, descSalle, particularite, nbPlaces, cinemaSelectionne.getIdCinema());
             SalleDAO salleDAO = new SalleDAO();
             boolean controle = salleDAO.create(nouvelleSalle);
 
-            // nettoie l'ecran si tout s'est bien passe
             if (controle) {
                 bEffacerClick(null);
+            } else {
+                afficherPopUpErreur("Erreur BDD", "Impossible d'insérer la nouvelle salle.");
             }
         } catch (NumberFormatException e) {
-            // silence l'erreur de conversion
+            // Le catch attrape maintenant l'erreur de format et prévient l'utilisateur au lieu de l'ignorer !
+            afficherPopUpErreur("Format Incorrect", "Le numéro de salle et le nombre de places doivent obligatoirement être des nombres.");
         }
     }
 
     @FXML
     public void bEffacerClick(ActionEvent event) {
-        // remise a zero de tous les inputs
         if (tfNumSalle != null) tfNumSalle.clear();
         if (tfDescSalle != null) tfDescSalle.clear();
         if (tfParticularite != null) tfParticularite.clear();
@@ -86,7 +94,6 @@ public class AjouterSalleController extends MenuController implements Initializa
 
     @FXML
     public void bRetourClick(ActionEvent event) {
-        // retour classique vers le tableau de bord
         Stage stageP = (Stage) bRetour.getScene().getWindow();
         stageP.close();
 
