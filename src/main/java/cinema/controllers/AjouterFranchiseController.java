@@ -33,13 +33,11 @@ public class AjouterFranchiseController extends MenuController implements Initia
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        // charge la liste des gerants au lancement de la vue
         ObservableList<Utilisateur> utilisateurs = getUtilisateurList();
         lvGerantFranchise.setItems(utilisateurs);
     }
 
     private ObservableList<Utilisateur> getUtilisateurList() {
-        // recupere tous les utilisateurs pour le choix du gerant
         UtilisateurDAO utilisateurDAO = new UtilisateurDAO();
         List<Utilisateur> utilisateurs = utilisateurDAO.findAll();
         return FXCollections.observableArrayList(utilisateurs);
@@ -47,7 +45,6 @@ public class AjouterFranchiseController extends MenuController implements Initia
 
     @FXML
     public void bRetourClick(ActionEvent event) {
-        // gestion de l'annulation et retour au menu principal
         Stage stageP = (Stage) bRetour.getScene().getWindow();
         stageP.close();
 
@@ -70,33 +67,41 @@ public class AjouterFranchiseController extends MenuController implements Initia
         }
     }
 
+
     @FXML
     public void bEnregistrerClick(ActionEvent event) {
-        // collecte des donnees du formulaire
         String nomFranchise = tfNomFranchise.getText();
         String siegeSocial = tfSiegeSocial.getText();
         Utilisateur gerantSelect = lvGerantFranchise.getSelectionModel().getSelectedItem();
 
-        // controle de saisie stricte
-        if (nomFranchise == null || nomFranchise.isEmpty() || siegeSocial == null || siegeSocial.isEmpty() || gerantSelect == null) {
+        // Contrôles de saisies avec messages explicites
+        if (nomFranchise == null || nomFranchise.isEmpty()) {
+            afficherPopUpErreur("Erreur de saisie", "Le nom de la franchise ne peut pas être vide.");
+            return;
+        }
+        if (siegeSocial == null || siegeSocial.isEmpty()) {
+            afficherPopUpErreur("Erreur de saisie", "Le siège social de la franchise ne peut pas être vide.");
+            return;
+        }
+        if (gerantSelect == null) {
+            afficherPopUpErreur("Sélection manquante", "Veuillez sélectionner un gérant dans la liste.");
             return;
         }
 
-        // affectation et envoi a la couche de donnees
         int id = gerantSelect.getIdUtilisateur();
         Franchise franchise = new Franchise(0, nomFranchise, siegeSocial, id);
         FranchiseDAO franchiseDAO = new FranchiseDAO();
         boolean controle = franchiseDAO.create(franchise);
 
-        // purge des champs en cas de succes
         if (controle) {
             bEffacerClick(null);
+        } else {
+            afficherPopUpErreur("Erreur BDD", "Une erreur est survenue lors de la création de la franchise.");
         }
     }
 
     @FXML
     public void bEffacerClick(ActionEvent event) {
-        // utilitaire de nettoyage du formulaire
         if (tfNomFranchise != null) tfNomFranchise.clear();
         if (tfSiegeSocial != null) tfSiegeSocial.clear();
         lvGerantFranchise.getSelectionModel().clearSelection();

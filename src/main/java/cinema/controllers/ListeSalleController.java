@@ -51,18 +51,15 @@ public class ListeSalleController extends MenuController implements Initializabl
     public void initialize(URL location, ResourceBundle resources) {
         CinemaDAO cinemaDAO = new CinemaDAO();
 
-        // pre-charge tous les cinemas pour resoudre les id plus rapidement
         Map<Integer, Cinema> cinemas = cinemaDAO.findAll()
                 .stream()
                 .collect(Collectors.toMap(Cinema::getIdCinema, c -> c));
 
-        // resolution de l'id cinema en nom string
         tcCinema.setCellValueFactory(cellData -> {
             Cinema cinema = cinemas.get(cellData.getValue().getIdCinema());
             return new SimpleStringProperty(cinema != null ? cinema.getDenomination() : "Aucun cinéma");
         });
 
-        // affectation standard des donnees de salle
         tcNumSalle.setCellValueFactory(new PropertyValueFactory<>("numSalle"));
         tcDescSalle.setCellValueFactory(new PropertyValueFactory<>("descSalle"));
         tcParticularite.setCellValueFactory(new PropertyValueFactory<>("particularite"));
@@ -76,7 +73,6 @@ public class ListeSalleController extends MenuController implements Initializabl
     }
 
     private ObservableList<Salle> getSalleList() {
-        // charge les donnees brutes depuis la bdd
         SalleDAO salleDAO = new SalleDAO();
         List<Salle> listeSalles = salleDAO.findAll();
         ObservableList<Salle> list = FXCollections.observableArrayList();
@@ -88,18 +84,15 @@ public class ListeSalleController extends MenuController implements Initializabl
 
     @FXML
     private void bRetourClick() {
-        // retour global
         Stage stageP = (Stage) bRetour.getScene().getWindow();
         stageP.close();
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_accueil.fxml"));
             Parent root = fxmlLoader.load();
-
             AccueilController accueilController = fxmlLoader.getController();
             accueilController.setName(nameUti);
             accueilController.setBienvenue();
-
             Stage stage = new Stage();
             stage.setTitle("Accueil Gestion de Franchises");
             stage.setScene(new Scene(root));
@@ -112,7 +105,6 @@ public class ListeSalleController extends MenuController implements Initializabl
     }
 
     private void addButtonModifierToTable() {
-        // generation dynamique du bouton pour modifier une ligne precise
         tcModifier.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Modifier");
             {
@@ -124,11 +116,9 @@ public class ListeSalleController extends MenuController implements Initializabl
                     try {
                         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/cinema/views/page_modif_salle.fxml"));
                         Parent root = fxmlLoader.load();
-
                         ModifierSalleController modifierSalleCtrl = fxmlLoader.getController();
                         modifierSalleCtrl.setAttributes(salle);
                         modifierSalleCtrl.setName(nameUti);
-
                         Stage stage = new Stage();
                         stage.setTitle("Modification salle");
                         stage.setScene(new Scene(root));
@@ -140,7 +130,6 @@ public class ListeSalleController extends MenuController implements Initializabl
                     }
                 });
             }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -150,15 +139,23 @@ public class ListeSalleController extends MenuController implements Initializabl
     }
 
     private void addButtonSupprimerToTable() {
-        // generation dynamique de l'action delete par ligne
         tcSupprimer.setCellFactory(column -> new TableCell<>() {
             private final Button btn = new Button("Supprimer");
             {
                 btn.setOnAction(event -> {
                     Salle salle = getTableView().getItems().get(getIndex());
-                    tvSalles.getItems().remove(salle);
-                    SalleDAO salleDAO = new SalleDAO();
-                    salleDAO.delete(salle);
+
+                    // Pop-up de confirmation avant de supprimer la salle d'un cinéma
+                    boolean confirmer = afficherPopUpConfirmation(
+                            "Confirmation de suppression",
+                            "Voulez-vous vraiment supprimer la salle N°" + salle.getNumSalle() + " de ce cinéma ?"
+                    );
+
+                    if (confirmer) {
+                        SalleDAO salleDAO = new SalleDAO();
+                        salleDAO.delete(salle);
+                        tvSalles.getItems().remove(salle);
+                    }
                 });
             }
 
