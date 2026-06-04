@@ -46,7 +46,6 @@ public class ModifierSalleController extends MenuController implements Initializ
         return FXCollections.observableArrayList(cinemas);
     }
 
-
     public void setAttributes(Salle salle) {
         this.idSalle = salle.getIdSalle();
         tfNumSalle.setText(String.valueOf(salle.getNumSalle()));
@@ -54,7 +53,6 @@ public class ModifierSalleController extends MenuController implements Initializ
         tfParticularite.setText(salle.getParticularite() != null ? salle.getParticularite() : "");
         tfNbPlaces.setText(String.valueOf(salle.getNbPlaces()));
         this.idCinemaSelectionne = salle.getIdCinema();
-
 
         ObservableList<Cinema> items = lvCinema.getItems();
         for (int i = 0; i < items.size(); i++) {
@@ -68,6 +66,12 @@ public class ModifierSalleController extends MenuController implements Initializ
     @FXML
     private void bEnregistrerClick(ActionEvent event) {
         try {
+            // Vérifie les champs vides avant le parsing pour un message plus clair
+            if (tfNumSalle.getText().isEmpty() || tfNbPlaces.getText().isEmpty()) {
+                afficherPopUpErreur("Champs incomplets", "Le numéro de salle et le nombre de places sont obligatoires.");
+                return;
+            }
+
             int numSalle = Integer.parseInt(tfNumSalle.getText());
             String descSalle = tfDescSalle.getText();
             String particularite = tfParticularite.getText();
@@ -76,7 +80,6 @@ public class ModifierSalleController extends MenuController implements Initializ
 
             if (descSalle != null && selectedCinema != null && !descSalle.trim().isEmpty()) {
                 int idNouveauCinema = selectedCinema.getIdCinema();
-
 
                 Salle salleModifiee = new Salle(this.idSalle, numSalle, descSalle, particularite, nbPlaces, idNouveauCinema);
 
@@ -107,12 +110,14 @@ public class ModifierSalleController extends MenuController implements Initializ
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                } else {
+                    afficherPopUpErreur("Erreur BDD", "Impossible d'appliquer la modification en base de données.");
                 }
             } else {
-                System.out.println("Veuillez remplir tous les champs correctement.");
-                            }
+                afficherPopUpErreur("Champs incomplets", "Veuillez remplir la description et sélectionner un cinéma.");
+            }
         } catch (NumberFormatException e) {
-            System.out.println("Erreur");
+            afficherPopUpErreur("Format Incorrect", "Le numéro de salle et le nombre de places doivent être des nombres.");
         }
     }
 
